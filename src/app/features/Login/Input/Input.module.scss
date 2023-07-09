@@ -1,0 +1,30 @@
+.input-container {
+    background-color: #f9f9f9;
+    margin: 20px;
+   padding: 10px;
+   border-radius: 30px;
+   border: solid 2px black;
+   display: flex;
+    align-items: center;
+    font-size: 1.2rem;
+   
+
+   &__icon {
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    margin-right: 10px;
+   }
+
+}
+
+input {
+    border: none;
+    width: 300px;
+    height: 30px;
+    &:focus {
+        outline: none;
+    }
+
+
+}
