@@ -1,27 +1,27 @@
 .input-container {
     background-color: #f9f9f9;
-    margin: 20px;
-   padding: 10px;
-   border-radius: 30px;
-   border: solid 2px black;
-   display: flex;
+    margin: 25px 0;
+    padding: 5px;
+    border-radius: 30px;
+    border: solid 2px black;
+    display: flex;
     align-items: center;
     font-size: 1.2rem;
-   
+    width: 500px;
 
-   &__icon {
-    width: 20px;
-    height: 20px;
-    background-color: red;
-    margin-right: 10px;
-   }
+
+
+    &__icon {
+        padding: 5px;
+        margin-right: 5px;
+    }
 
 }
 
 input {
     border: none;
-    width: 300px;
-    height: 30px;
+    width: 100%;
+
     &:focus {
         outline: none;
     }

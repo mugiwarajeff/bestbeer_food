@@ -10,6 +10,9 @@
     justify-content: center;
     align-items: center;
 
+    h2 {
+        color: #f9f9f9
+    }
 
     &__login-container {
         background-color: $purple-light;
@@ -19,21 +22,65 @@
         justify-content: center;
         align-items: center;
 
-        @media screen and (max-width: $desktop ) {
-            height: 60%;
-            width: 40%;
-        }
-
-        @media screen and (max-width: $tablet) {
-            height: 70%;
-            width: 80%;
-        }
 
         @media screen and (max-width: $mobile) {
+            width: 90%;
             height: 60%;
-            width: 80%;
-            
         }
-        
+
+
+        @media screen and (min-width: $mobile) and (max-width: $tablet) {
+            width: 90%;
+            height: 60%;
+        }
+
+
+        @media screen and (min-width: $tablet) and (max-width: $desktop ) {
+            width: 60%;
+            height: 60%;
+        }
+
+        @media screen and (min-width: $desktop) {
+            width: 60%;
+            height: 60%;
+        }
+
+
+    }
+
+    &__itens-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        background-color: yellow;
+
+        @media screen and (max-width: $mobile) {
+            width: 200px;
+
+        }
+
+
+        @media screen and (min-width: $mobile) and (max-width: $tablet) {
+            width: 400px;
+
+        }
+
+
+        @media screen and (min-width: $tablet) and (max-width: $desktop ) {
+            width: 600px;
+        }
+
+        @media screen and (min-width: $desktop) {
+            width: 600px;
+            ;
+        }
+    }
+
+    &__button-container {
+
+        align-self: flex-end;
+
     }
 }
