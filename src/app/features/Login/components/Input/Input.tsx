@@ -11,6 +11,7 @@ interface InputProps {
     value: string,
     setValue: React.Dispatch<React.SetStateAction<string>>,
     register: UseFormRegisterReturn,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     errorState: FieldError | Merge<FieldError, FieldErrorsImpl<any>> | undefined,
 }
 
