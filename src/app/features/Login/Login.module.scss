@@ -1,6 +1,14 @@
 @import "app/theme/colors.scss";
 @import "app/theme/breakpoints.scss";
 
+$login-container-width: 500px;
+$login-container-height: 600px;
+
+$itens-proportion-height: 80%;
+$itens-proportion-widht: 80%;
+
+
+
 .login {
     box-sizing: border-box;
     background-color: $purple-full-dark;
@@ -9,10 +17,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-
-    h2 {
-        color: #f9f9f9
-    }
+    text-align: center;
+    font-size: 1.4rem;
 
     &__login-container {
         background-color: $purple-light;
@@ -25,27 +31,23 @@
 
         @media screen and (max-width: $mobile) {
             width: 90%;
-            height: 60%;
+            height: 80%;
         }
-
 
         @media screen and (min-width: $mobile) and (max-width: $tablet) {
-            width: 90%;
-            height: 60%;
+            width: 80%;
+            height: 70%;
         }
 
-
         @media screen and (min-width: $tablet) and (max-width: $desktop ) {
-            width: 60%;
-            height: 60%;
+            width: $login-container-width;
+            height: $login-container-height;
         }
 
         @media screen and (min-width: $desktop) {
-            width: 60%;
-            height: 60%;
+            width: $login-container-width;
+            height: $login-container-height;
         }
-
-
     }
 
     &__itens-container {
@@ -54,33 +56,37 @@
         justify-content: center;
         align-items: center;
         padding: 20px;
-        background-color: yellow;
+
 
         @media screen and (max-width: $mobile) {
-            width: 200px;
-
+            width: $itens-proportion-widht;
+            height: $itens-proportion-height;
         }
-
 
         @media screen and (min-width: $mobile) and (max-width: $tablet) {
-            width: 400px;
-
+            width: $itens-proportion-widht;
+            height: $itens-proportion-height;
         }
 
-
         @media screen and (min-width: $tablet) and (max-width: $desktop ) {
-            width: 600px;
+            width: $itens-proportion-widht;
+            height: $itens-proportion-height;
         }
 
         @media screen and (min-width: $desktop) {
-            width: 600px;
-            ;
+            width: $itens-proportion-widht;
+            height: $itens-proportion-height;
         }
     }
 
-    &__button-container {
+    &__title {
+        margin-bottom: 50px;
+        color: #f9f9f9;
+    }
 
+    &__link-forgot-password {
+        margin-top: 20px;
         align-self: flex-end;
-
+        font-size: 1rem;
     }
 }

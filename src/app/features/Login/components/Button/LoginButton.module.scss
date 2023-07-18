@@ -1,0 +1,30 @@
+@import "app/theme/colors.scss";
+@import "app/theme/breakpoints.scss";
+
+.login_button {
+    margin-top: 20px;
+    align-self: flex-end;
+    width: 30%;
+
+    @media screen and (max-width: $tablet) {
+        width: 100%;
+    }
+
+    button {
+        background-color: $purple;
+        border: 1px solid black;
+        width: 100%;
+        height: 40px;
+        border-radius: 30px;
+        color: white;
+        align-self: flex-end;
+
+        &:hover {
+            background-color: #f9f9f9;
+            color: black;
+            cursor: pointer;
+        }
+    }
+
+
+}
