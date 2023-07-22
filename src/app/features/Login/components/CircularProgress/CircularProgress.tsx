@@ -16,9 +16,6 @@ export default function CircularProgress() {
 
     useEffect(() => { setTimeout(animateProgressBar, 10); }, [rotation]);
 
-
-
-
     return <CircularProgressbar
         className={styles.circularProgress}
         value={25}

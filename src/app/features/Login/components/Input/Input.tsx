@@ -29,6 +29,7 @@ export default function Input({ Icon, placeHolder, inputType, value, setValue, r
             <input
                 type={inputType}
                 placeholder={placeHolder}
+                autoComplete="off"
                 value={value}
                 {...register}
                 onChange={

@@ -31,7 +31,7 @@ export default function Login() {
         console.log(values);
     }
 
-    //const users = [{ user: "user1", password: "123" }, { user: "user2", password: "456" }];
+    const users = [{ user: "user1", password: "123" }, { user: "user2", password: "456" }];
 
     return <section className={styles.login} >
         {isSubmitting ? <CircularProgress /> : null}
