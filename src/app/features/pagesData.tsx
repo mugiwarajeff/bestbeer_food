@@ -1,11 +1,12 @@
 import routerType from "app/types/routerTypes";
 import Login from "./Login/Login";
-import Home from "./Home/home";
+import Home from "./Home/Home";
+
 
 const pagesData: routerType[] = [
     {
         title: "Login",
-        path: "/",
+        path: "/login",
         element: <Login />
     }, {
         title: "Home",

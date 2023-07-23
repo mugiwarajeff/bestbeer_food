@@ -6,6 +6,9 @@ import { FiLock } from "react-icons/fi";
 import { useState } from "react";
 import CircularProgress from "./components/CircularProgress/CircularProgress";
 import { FieldValues, useForm } from "react-hook-form";
+import { IUser } from "./interfaces/users";
+import users from "./users.json";
+import { useNavigate } from "react-router-dom";
 
 
 export default function Login() {
@@ -16,22 +19,40 @@ export default function Login() {
     const { handleSubmit, register, formState } = useForm({ mode: "onSubmit" });
     const { errors, isSubmitting } = formState;
 
+    const navigator = useNavigate();
+
     function simulatePromisse(): Promise<void> {
         return new Promise(resolve => {
             setTimeout(resolve, 3000);
         },);
     }
 
-    async function onSubmitHandler(values: FieldValues) {
-        await simulatePromisse();
-        console.log(isSubmitting);
-        console.log(user);
-        console.log(password);
-        console.log(errors);
-        console.log(values);
+    function compareUsers(comparedUser: IUser, users: IUser[]) : boolean {
+        for (const user of users){
+            if(user.user === comparedUser.user && user.password === comparedUser.password) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
-    const users = [{ user: "user1", password: "123" }, { user: "user2", password: "456" }];
+    async function onSubmitHandler(values: FieldValues){
+        await simulatePromisse();
+        
+        const createdUser: IUser = {
+            user: user,
+            password: password
+        };
+
+        if(compareUsers(createdUser, users)){
+            alert("Login realizado com sucesso");
+            navigator("/home");
+        }else{
+            alert("Usuario ou senha invalidos... tente novamente");
+        }    
+    }
+ 
 
     return <section className={styles.login} >
         {isSubmitting ? <CircularProgress /> : null}

@@ -1,0 +1,28 @@
+.asideHeader {
+    height: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &__icon {
+      height: 70px;
+      width: 70px;  
+      background-color: #f9f9f9;
+      border-radius: 10px;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      margin-right: 15px;
+    }
+
+    &__userInfo {
+        color: #f9f9f9;
+
+        h4 {
+            margin: 0px;
+            margin-bottom: 5px ;
+        }
+    }
+}
