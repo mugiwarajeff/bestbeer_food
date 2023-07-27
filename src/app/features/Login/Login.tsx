@@ -27,9 +27,9 @@ export default function Login() {
         },);
     }
 
-    function compareUsers(comparedUser: IUser, users: IUser[]) : boolean {
-        for (const user of users){
-            if(user.user === comparedUser.user && user.password === comparedUser.password) {
+    function compareUsers(comparedUser: IUser, users: IUser[]): boolean {
+        for (const user of users) {
+            if (user.user === comparedUser.user && user.password === comparedUser.password) {
                 return true;
             }
         }
@@ -37,22 +37,23 @@ export default function Login() {
         return false;
     }
 
-    async function onSubmitHandler(values: FieldValues){
+    async function onSubmitHandler(values: FieldValues) {
         await simulatePromisse();
-        
+
+
         const createdUser: IUser = {
             user: user,
             password: password
         };
 
-        if(compareUsers(createdUser, users)){
+        if (compareUsers(createdUser, users)) {
             alert("Login realizado com sucesso");
             navigator("/home");
-        }else{
+        } else {
             alert("Usuario ou senha invalidos... tente novamente");
-        }    
+        }
     }
- 
+
 
     return <section className={styles.login} >
         {isSubmitting ? <CircularProgress /> : null}

@@ -5,16 +5,16 @@
     align-items: center;
 
     &__icon {
-      height: 70px;
-      width: 70px;  
-      background-color: #f9f9f9;
-      border-radius: 10px;
+        height: 70px;
+        width: 70px;
+        background-color: #f9f9f9;
+        border-radius: 10px;
 
-      display: flex;
-      justify-content: center;
-      align-items: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
-      margin-right: 15px;
+        margin: 0px 15px;
     }
 
     &__userInfo {
@@ -22,7 +22,11 @@
 
         h4 {
             margin: 0px;
-            margin-bottom: 5px ;
+            margin-bottom: 5px;
         }
     }
+}
+
+.close {
+    display: none;
 }

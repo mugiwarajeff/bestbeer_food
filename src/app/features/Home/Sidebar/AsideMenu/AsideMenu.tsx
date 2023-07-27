@@ -1,34 +1,35 @@
-import { icons } from "react-icons";
 import IModule from "../../Interfaces/IModule";
 import styles from "./AsideMenu.module.scss";
 import MenuItem from "./MenuItem/MenuItem";
-import { FaUserAlt, FaUsers } from "react-icons/fa";
+import { FaUsers, FaTruckRampBox, FaMoneyCheckDollar } from "react-icons/fa6";
+import { BsBoxSeam } from "react-icons/bs";
+import { SiAirtable } from "react-icons/si";
 import { useState } from "react";
 
-export default function AsideMenu(){
+export default function AsideMenu() {
 
     const [selectedModule, setSelectedModule] = useState<IModule>();
 
     const modules: IModule[] = [
         {
-            name: "Mesas", 
+            name: "Mesas",
             link: "desks",
-            icon: FaUserAlt
-        }, 
+            icon: SiAirtable
+        },
         {
             name: "Pedidos",
             link: "orders",
-            icon: FaUserAlt
+            icon: FaMoneyCheckDollar
         },
         {
             name: "Produtos",
             link: "products",
-            icon: FaUserAlt
+            icon: BsBoxSeam
         },
         {
             name: "Estoque",
             link: "stocks",
-            icon: FaUserAlt
+            icon: FaTruckRampBox
         },
         {
             name: "Funcionários",
@@ -37,29 +38,29 @@ export default function AsideMenu(){
         }
     ];
 
-    function testModulesEquals(module: IModule, selectedModule: IModule | undefined) : boolean {
-        if(selectedModule !== undefined){
-            if(module.icon === selectedModule.icon && module.name === selectedModule.name) {
+    function testModulesEquals(module: IModule, selectedModule: IModule | undefined): boolean {
+        if (selectedModule !== undefined) {
+            if (module.icon === selectedModule.icon && module.name === selectedModule.name) {
                 return true;
             }
         }
 
         return false;
-    } 
+    }
 
     return <div className={styles.asideMenu}>
         {modules.map(
-            (module) => <MenuItem 
+            (module) => <MenuItem
                 key={module.name}
-                icon={module.icon} 
+                icon={module.icon}
                 navigateTo={module.link}
                 label={module.name}
                 selected={testModulesEquals(module, selectedModule)}
-                setModule={ () => {
+                setModule={() => {
                     console.log(module.name);
                     setSelectedModule(module);
                 }}
-                />
+            />
         )};
 
     </div>;
