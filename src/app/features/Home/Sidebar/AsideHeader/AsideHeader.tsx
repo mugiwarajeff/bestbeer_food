@@ -9,23 +9,31 @@ export default function AsideHeader() {
     const setIsOpen = setSideBarState();
     const isOpen = getSidebarState();
 
+    const toggleButtonClasses = classNames({
+        [styles.asideHeader__toggleButton]: true,
+        [styles.asideHeader__toggleButton__open]: !isOpen
+    });
 
     const asideHeaderIconStyles = classNames({
         [styles.asideHeader__icon]: true,
         [styles.close]: !isOpen,
-    });
 
+    });
     const headerUserInfoStyles = classNames({
         [styles.asideHeader__userInfo]: true,
         [styles.close]: !isOpen
     });
+
+
     return <header className={styles.asideHeader}>
-        <RiArrowGoBackFill
-            color="white"
-            size={24}
-            onClick={() => setIsOpen(!isOpen)}
-            style={{ transform: "rotate(0deg)" }}
-            rotate={90} />
+        <div className={toggleButtonClasses}>
+            <RiArrowGoBackFill
+
+                size={24}
+                onClick={() => setIsOpen(!isOpen)}
+                style={{ transform: "rotate(0deg)", }}
+            />
+        </div>
         <div className={asideHeaderIconStyles}>
             <FaUserAlt size={32} />
         </div>
