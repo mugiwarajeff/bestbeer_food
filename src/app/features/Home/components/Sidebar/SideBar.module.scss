@@ -1,0 +1,26 @@
+@import "app/shared/theme/colors.scss";
+
+.sideBar {
+    background-color: $purple-dark;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    min-width: 300px;
+
+    hr {
+        width: 100%;
+    }
+
+    &__open {
+        width: 20%;
+        transition: all 0.25s;
+    }
+
+    &__close {
+        min-width: 70px;
+        width: 4%;
+        transition: all 0.25s;
+    }
+
+
+}

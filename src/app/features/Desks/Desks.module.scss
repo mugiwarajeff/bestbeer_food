@@ -1,0 +1,10 @@
+.desks {
+    height: 90%;
+    width: 100%;
+    background-color: green;
+
+    display: flex;
+    flex-wrap: wrap;
+    overflow : scroll;
+    overflow-x: hidden;
+}
