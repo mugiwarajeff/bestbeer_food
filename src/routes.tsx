@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import pagesData from "app/features/pagesData";
-import routerType from "app/types/routerTypes";
 import { RecoilRoot } from "recoil";
+import routerType from "app/shared/types/routerTypes";
 
 
 export default function RouteContainer() {

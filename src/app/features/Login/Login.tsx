@@ -9,12 +9,14 @@ import { FieldValues, useForm } from "react-hook-form";
 import { IUser } from "./interfaces/users";
 import users from "./users.json";
 import { useNavigate } from "react-router-dom";
+import { useSetCurrentUser } from "app/shared/hooks/useCurrentUser";
 
 
 export default function Login() {
 
     const [user, setUser] = useState<string>("");
     const [password, setPassword] = useState<string>("");
+    const setCurrentUser = useSetCurrentUser();
 
     const { handleSubmit, register, formState } = useForm({ mode: "onSubmit" });
     const { errors, isSubmitting } = formState;
@@ -43,12 +45,16 @@ export default function Login() {
 
         const createdUser: IUser = {
             user: user,
-            password: password
+            password: password,
+            role: "Gerente",
+            name: "Jefferson Cerqueira"
         };
 
         if (compareUsers(createdUser, users)) {
             alert("Login realizado com sucesso");
+            setCurrentUser(createdUser);
             navigator("/home");
+
         } else {
             alert("Usuario ou senha invalidos... tente novamente");
         }
