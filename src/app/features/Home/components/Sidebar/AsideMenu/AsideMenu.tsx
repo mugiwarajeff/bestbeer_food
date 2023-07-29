@@ -6,10 +6,14 @@ import { BsBoxSeam } from "react-icons/bs";
 import { SiAirtable } from "react-icons/si";
 import { useState } from "react";
 import IModule from "app/features/Home/Interfaces/IModule";
+import { getSidebarState } from "app/features/Home/hooks/UseSideBar";
+import classNames from "classnames";
 
 export default function AsideMenu() {
 
     const [selectedModule, setSelectedModule] = useState<IModule>();
+
+    const isOpen = getSidebarState();
 
     const modules: IModule[] = [
         {
@@ -49,7 +53,12 @@ export default function AsideMenu() {
         return false;
     }
 
-    return <div className={styles.asideMenu}>
+    const classes = classNames({
+        [styles.asideMenu]: true,
+        [styles.close]: !isOpen
+    });
+
+    return <div className={classes}>
         {modules.map(
             (module) => <MenuItem
                 key={module.name}

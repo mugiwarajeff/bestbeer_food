@@ -1,4 +1,13 @@
+@import "app/shared/theme/breakpoints.scss";
+
 .asideMenu {
     display: flex;
     flex-direction: column;
+}
+
+.close {
+
+    @media screen and (max-width: $mobile) {
+        display: none;
+    }
 }

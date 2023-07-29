@@ -1,11 +1,35 @@
+@import "app/shared/theme/breakpoints.scss";
+
 .desks {
+    box-sizing: border-box;
     height: 90%;
     width: 100%;
     background-color: #f9f9f9;
-
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    overflow : scroll;
-    overflow-x: hidden;
-    
+    grid-template-columns: repeat(3, 1fr);
+    row-gap: 10%;
+    column-gap: 5%;
+    overflow: scroll;
+    overflow-x: scroll;
+    padding: 5%;
+
+    @media screen and (max-width: $mobile) {
+        grid-template-columns: 1fr;
+    }
+
+    @media screen and (min-width: $mobile) and (max-width: $tablet) {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    &__open {
+        grid-template-columns: repeat(4, 1fr);
+
+        @media screen and (max-width: $mobile) {
+            grid-template-columns: 1fr;
+        }
+
+        @media screen and (min-width: $mobile) and (max-width: $tablet) {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
 }
