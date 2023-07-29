@@ -1,6 +1,53 @@
+@import "app/shared/theme/colors.scss";
+
 .deskCard {
-    height: 350px;
+    height: 250px;
     width: 250px;
     margin: 20px;
-    background-color: red;
+    background-color: $purple-light;
+    border-radius: 20px;
+    color: #f9f9f9;
+
+    .eyeIcon {
+        visibility: hidden;
+    }
+
+    &:hover {
+        cursor: pointer;
+        .eyeIcon {
+            opacity: 0.4;
+            visibility: visible;
+        }
+    }
+
+    &__itens {
+       height: 100%;
+       width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        text-align: center;
+        
+        h1 {
+            margin: 10px 0 30px 0;
+        }
+
+        &__view_details{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+
+            a {
+                font-size: 1.1rem;
+                margin: 0 10px;
+                color: #f9f9f9;
+                text-decoration: none;
+            }
+           
+        }
+
+    }
+    
 }
