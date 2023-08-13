@@ -4,12 +4,18 @@ import { FaUserAlt } from "react-icons/fa";
 import { RiArrowGoBackFill } from "react-icons/ri";
 import { getSidebarState, setSideBarState } from "../../../hooks/UseSideBar";
 import { useCurrentUser } from "app/shared/hooks/useCurrentUser";
+import { FaTruckRampBox } from "react-icons/fa6";
 
 export default function AsideHeader() {
 
     const setIsOpen = setSideBarState();
     const isOpen = getSidebarState();
     const currentUser = useCurrentUser();
+
+    const headerClasses = classNames({
+        [styles.asideHeader] : true,
+        [styles.asideHeader__close]: !isOpen
+    });
 
     const toggleButtonClasses = classNames({
         [styles.asideHeader__toggleButton]: true,
@@ -26,8 +32,7 @@ export default function AsideHeader() {
         [styles.close]: !isOpen
     });
 
-
-    return <header className={styles.asideHeader}>
+    return <header className={headerClasses}>
         <div className={toggleButtonClasses}>
             <RiArrowGoBackFill
 

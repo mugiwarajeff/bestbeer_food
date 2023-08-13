@@ -1,4 +1,5 @@
 @import "app/shared/theme/colors.scss";
+@import "app/shared/theme/breakpoints.scss";
 
 .asideHeader {
     margin: 0px 10px;
@@ -6,6 +7,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
+    &__close {
+        @media screen and (max-width: $mobile) {
+            height: 100%
+        }
+    }
 
     &__toggleButton {
         color: #f9f9f9;
