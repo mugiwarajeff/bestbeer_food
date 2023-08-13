@@ -15,6 +15,10 @@
     &__open {
         width: 20%;
         transition: all 0.25s;
+
+        @media screen and (max-width: $mobile) {
+            min-width: 220px;
+        }
     }
 
     &__close {

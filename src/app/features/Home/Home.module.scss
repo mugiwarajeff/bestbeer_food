@@ -12,19 +12,19 @@
         height: 100%;
 
         header {
-        height: 10%;  
-        background-color: $purple-full-dark; 
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-        color: #f9f9f9;
-        padding: 0px 20px;
+            height: 10%;
+            background-color: $purple-full-dark;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            color: #f9f9f9;
+            padding: 0px 20px;
 
-        h3 {
-            margin: 0px;
-            font-size: 1.5rem;
-            font-weight: 500;
-        }
+            h3 {
+                margin: 0px;
+                font-size: 1.5rem;
+                font-weight: 500;
+            }
         }
     }
 }

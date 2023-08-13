@@ -13,7 +13,6 @@ export default function AsideMenu() {
 
     const [selectedModule, setSelectedModule] = useState<IModule>();
     const isOpen = getSidebarState();
-
     const modules: IModule[] = [
         {
             name: "Mesas",
