@@ -1,0 +1,29 @@
+@import "app/shared/theme/colors.scss";
+
+.userTable {
+    width: 100%;
+    background-color: $purple-light;
+    box-sizing: border-box;
+    padding: 30px;
+
+    
+    th, td {
+        border: 1px solid red;
+    }
+
+    thead {
+        color: red;
+    }
+
+    tbody {
+        tr {
+            background-color: #f9f9f9;
+            height: 60px;
+            border: 1px solid red;
+
+            &:first-child {
+                border-radius: 10px;
+            }
+        }
+    }
+}
