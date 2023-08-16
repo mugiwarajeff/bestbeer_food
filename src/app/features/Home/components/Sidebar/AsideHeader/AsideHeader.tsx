@@ -4,7 +4,7 @@ import { FaUserAlt } from "react-icons/fa";
 import { RiArrowGoBackFill } from "react-icons/ri";
 import { getSidebarState, setSideBarState } from "../../../hooks/UseSideBar";
 import { useCurrentUser } from "app/shared/hooks/useCurrentUser";
-import { FaTruckRampBox } from "react-icons/fa6";
+
 
 export default function AsideHeader() {
 
@@ -13,7 +13,7 @@ export default function AsideHeader() {
     const currentUser = useCurrentUser();
 
     const headerClasses = classNames({
-        [styles.asideHeader] : true,
+        [styles.asideHeader]: true,
         [styles.asideHeader__close]: !isOpen
     });
 

@@ -1,44 +1,54 @@
 import styles from "./UserTable.module.scss";
 import { FaEdit } from "react-icons/fa";
+import { AiOutlineClose, AiOutlineEdit } from "react-icons/ai";
+import { IEmployer } from "../../interfaces/employers";
 
-export default function UserTable(){
+interface TableProps {
+    values: IEmployer[]
+}
+
+export default function UserTable({ values }: TableProps) {
+
+    const typeProperties = Object.keys(values[0]);
+    typeProperties.shift();
 
     return <div className={styles.userTable}>
         <table>
             <thead>
                 <tr>
+                    {typeProperties.map((propety) => <th key={typeProperties.indexOf(propety)}>
+                        {propety.charAt(0).toUpperCase() + propety.slice(1)}
+                    </th>)}
                     <th>
-                        Nome
-                    </th>
-                    <th>
-                        email
-                    </th>
-                    <th>
-                        telefone
-                    </th>
-                    <th>
-                        actions
+                        Actions
                     </th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
+                {values.map((employer) => <tr key={employer.id}>
                     <td>
-                        Jefferson
+                        {employer.name}
                     </td>
                     <td>
-                        Jeffersoncerqueira@gmail.com
+                        {employer.email}
                     </td>
                     <td>
-                        77 99858-7437
+                        {employer.telefone}
                     </td>
                     <td>
-                        <FaEdit size={40}/>
-                        <FaEdit size={40}/>
-                        <FaEdit size={40}/>
+                        <div className={styles.iconsContainer}>
+                            <FaEdit size={40} />
+                            <AiOutlineEdit size={40} />
+                            <AiOutlineClose size={40} color="red" />
+                        </div>
                     </td>
-                </tr>
+                </tr>)
+                }
             </tbody>
         </table>
-    </div>;
+    </div >;
 }
+
+/**
+ * 
+ */
