@@ -1,7 +1,8 @@
-import { IUser } from "app/features/Login/interfaces/users";
-import { atom } from "recoil";
 
-export const currentUserAtom = atom<IUser>({
+import { atom } from "recoil";
+import { IUser } from "../interfaces/user";
+
+export const currentUserAtom = atom<IUser | null>({
     key: "currentUserAtom",
-    default: {user: "", password: "", role: ""}
+    default: null
 });

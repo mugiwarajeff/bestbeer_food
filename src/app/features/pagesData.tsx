@@ -6,6 +6,7 @@ import Stocks from "./Stocks/Stocks";
 import Employers from "./Employers/Employers";
 import Home from "./Home/home";
 import routerType from "app/shared/types/routerTypes";
+import ProtectedRoute from "app/shared/utils/protectedRoute";
 
 
 const pagesData: routerType[] = [
@@ -17,11 +18,11 @@ const pagesData: routerType[] = [
     {
         title: "Home",
         path: "/home",
-        element:  <Home />,
+        element: <ProtectedRoute> <Home/> </ProtectedRoute> ,
         childrens: [
             {
             title: "Desks", 
-            element: <Desks/>, 
+            element:  <Desks/>, 
             path: "desks"
             },
             {

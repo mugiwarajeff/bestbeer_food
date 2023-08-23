@@ -5,61 +5,55 @@ import { FaRegUser } from "react-icons/fa";
 import { FiLock } from "react-icons/fi";
 import { useState } from "react";
 import CircularProgress from "./components/CircularProgress/CircularProgress";
-import { FieldValues, useForm } from "react-hook-form";
-import { IUser } from "./interfaces/users";
-import users from "./users.json";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useSetCurrentUser } from "app/shared/hooks/useCurrentUser";
-
+import { ILogin } from "./interfaces/login";
+import { AxiosLoginService } from "./services/axiosLoginService";
+import { ILoginService } from "./interfaces/loginService";
+import { UnauthorizedException } from "app/shared/exceptions/unauthorizedException";
+import { ServerException } from "app/shared/exceptions/serverException";
+import IStorageService from "app/shared/localstorage/interfaces/IStorageService";
+import { LocalStorage } from "app/shared/localstorage/impl/localStorage";
 
 export default function Login() {
 
+    const loginService: ILoginService = new AxiosLoginService();
+    const storageService: IStorageService = new LocalStorage();
+
     const [user, setUser] = useState<string>("");
     const [password, setPassword] = useState<string>("");
-    const setCurrentUser = useSetCurrentUser();
-
     const { handleSubmit, register, formState } = useForm({ mode: "onSubmit" });
     const { errors, isSubmitting } = formState;
 
+    const setCurrentUser = useSetCurrentUser();
     const navigator = useNavigate();
 
-    function simulatePromisse(): Promise<void> {
-        return new Promise(resolve => {
-            setTimeout(resolve, 3000);
-        },);
-    }
-
-    function compareUsers(comparedUser: IUser, users: IUser[]): boolean {
-        for (const user of users) {
-            if (user.user === comparedUser.user && user.password === comparedUser.password) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    async function onSubmitHandler(values: FieldValues) {
-        await simulatePromisse();
-
-
-        const createdUser: IUser = {
+    async function onSubmitHandler() {
+        const attemptLogin: ILogin = {
             user: user,
             password: password,
-            role: "Gerente",
-            name: "Jefferson Cerqueira"
         };
 
-        if (compareUsers(createdUser, users)) {
+        try {
+            const {user, accessToken, refreshToken} = await loginService.createLogin(attemptLogin);
             alert("Login realizado com sucesso");
-            setCurrentUser(createdUser);
+            setCurrentUser(user);
+            storageService.saveAccessToken(accessToken);
+            storageService.saveRefreshToken(refreshToken);
             navigator("/home");
-
-        } else {
-            alert("Usuario ou senha invalidos... tente novamente");
-        }
+            
+        } catch(error) {
+            console.log(error);
+            if(error instanceof UnauthorizedException){
+                alert("Usuario ou senha invalidos... tente novamente");
+            }else if (error instanceof ServerException){
+                alert("Erro no servidor");
+            }else {
+                alert("Erro desconhecido");
+            }
+        }        
     }
-
 
     return <section className={styles.login} >
         {isSubmitting ? <CircularProgress /> : null}
@@ -79,7 +73,6 @@ export default function Login() {
                     register={{ ...register("user", { required: "*Campo Obrigatório" }) }}
                     errorState={errors.user}
                 />
-
                 <Input
                     Icon={FiLock}
                     placeHolder="Senha"

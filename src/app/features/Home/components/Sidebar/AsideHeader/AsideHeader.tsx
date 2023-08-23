@@ -45,8 +45,8 @@ export default function AsideHeader() {
             <FaUserAlt size={32} />
         </div>
         <div className={headerUserInfoStyles}>
-            <h4>{currentUser.name}</h4>
-            <span>{currentUser.role}</span>
+            <h4>{currentUser?.user}</h4>
+            <span>{currentUser?.role}</span>
         </div>
     </header>;
 }

@@ -9,9 +9,7 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-  <React.StrictMode>
     <RouterContainer />
-  </React.StrictMode>
 );
 
 
