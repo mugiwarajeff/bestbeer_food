@@ -1,0 +1,1 @@
+export const APIENDOPOINT = "http://localhost:3000";

@@ -5,7 +5,7 @@ import Products from "./Products/Products";
 import Stocks from "./Stocks/Stocks";
 import Employers from "./Employers/Employers";
 import Home from "./Home/home";
-import routerType from "app/shared/types/routerTypes";
+import routerType from "app/shared/interfaces/routerTypes";
 import ProtectedRoute from "app/shared/utils/protectedRoute";
 
 
