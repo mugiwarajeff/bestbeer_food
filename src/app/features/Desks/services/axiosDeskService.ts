@@ -2,37 +2,43 @@ import { APIENDOPOINT } from "app/shared/constants/apiEndpoint";
 import { IDesk } from "../interfaces/IDesk";
 import { IDeskService } from "../interfaces/IDeskService";
 import axios, { AxiosError, AxiosResponse } from "axios";
-import { redirect } from "react-router-dom";
 import IStorageService from "app/shared/localstorage/interfaces/IStorageService";
-import { LocalStorage } from "app/shared/localstorage/impl/localStorage";
+import { IRefreshTokenService } from "app/shared/services/interface/IRefreshTokenService";
 
 export class AxiosDeskService implements IDeskService {
     private axios;
     private localStorage: IStorageService;
+    private refreshTokenService: IRefreshTokenService;
 
-    constructor(localStorage: IStorageService){
+
+    constructor(localStorage: IStorageService, refreshTokenService: IRefreshTokenService) {
         this.localStorage = localStorage;
+        this.refreshTokenService = refreshTokenService;
 
         this.axios = axios.create({
-            baseURL: APIENDOPOINT , 
+            baseURL: APIENDOPOINT,
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${localStorage.getAccessToken()}` 
+                "Authorization": `Bearer ${localStorage.getAccessToken()}`
             }
         });
 
-        axios.interceptors.response.use((response: AxiosResponse) => {
+        this.axios.interceptors.response.use((response: AxiosResponse) => response,
+            async (error: AxiosError) => {
+                const originalRequest = error.config;
+                const responseStatusCode = error.response?.status;
 
-            return response;
-        }, (error: AxiosError) => {
-            const originalRequest = error.config;
+                if (responseStatusCode === 401 && originalRequest !== undefined) {
+                    console.log("token invalido... obtendo novo token");
 
-            
-            //TODO fazer retry de requisição
-            
-            console.log(error.response?.status);
-            
-        });
+                    const refreshToken: string = this.localStorage.getRefreshToken();
+                    const newAccessToken = await this.refreshTokenService.refreshToken(refreshToken);
+                    this.localStorage.saveAccessToken(newAccessToken);
+
+                    originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+                    return this.axios(originalRequest);
+                }
+            });
     }
 
     public async getAllDesks(): Promise<IDesk[]> {
@@ -40,7 +46,7 @@ export class AxiosDeskService implements IDeskService {
 
         console.log(response.data);
 
-        const desks: IDesk[] = response.data;        
+        const desks: IDesk[] = response.data;
         return desks;
     }
 
@@ -54,5 +60,5 @@ export class AxiosDeskService implements IDeskService {
         throw new Error("Method not implemented.");
     }
 
-    
+
 }

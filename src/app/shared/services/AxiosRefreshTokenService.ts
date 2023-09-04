@@ -1,34 +1,50 @@
-import IStorageService from "../localstorage/interfaces/IStorageService";
-import axios from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import { IRefreshTokenService } from "./interface/IRefreshTokenService";
 import { APIENDOPOINT } from "../constants/apiEndpoint";
 import { HttpException } from "../exceptions/httpException";
+import { UnauthorizedException } from "../exceptions/unauthorizedException";
+import { redirect } from "react-router-dom";
 
-export class AxiosRefreshTokenService implements IRefreshTokenService{
+export class AxiosRefreshTokenService implements IRefreshTokenService {
     private axios;
-    private localStorage;
 
-    constructor(localStorage: IStorageService){
+    constructor() {
         this.axios = axios.create({
             baseURL: APIENDOPOINT,
-            headers: {"Content-Type": "Application/json"},
+            headers: { "Content-Type": "application/json" },
         });
 
-        this.localStorage = localStorage;
 
+        this.axios.interceptors.response.use(response => response, (error: AxiosError) => {
+
+            if (error.response?.status === 401) {
+                console.log("caiu no redirect");
+                alert("Login invalido... por favor realize novo login");
+
+                redirect("login");
+                console.log(error.response.status);
+            }
+
+
+        });
     }
 
-    public async refreshToken(): Promise<string>{
-        const refreshToken: string = this.localStorage.getRefreshToken();
+    public async refreshToken(refreshToken: string): Promise<string> {
 
-        const response: Response = await axios.post(
-            "/login/refresh", 
-            {refreshToken: refreshToken});
-        
-        if(response.status === 200 || response.status === 201){
-            console.log(response.body);
-            return "";
+        const response: AxiosResponse = await this.axios.post(
+            "login/refresh",
+            { refreshToken: refreshToken });
+
+        if (response.status === 200 || response.status === 201) {
+
+            const newAccessToken = response.data["acess_token"];
+            return newAccessToken;
         }
+
+        if (response.status === 401) {
+            throw new UnauthorizedException();
+        }
+
 
         throw new HttpException();
     }

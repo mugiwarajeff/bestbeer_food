@@ -7,14 +7,23 @@ import { IDeskService } from "./interfaces/IDeskService";
 import { AxiosDeskService } from "./services/axiosDeskService";
 import useDeksState from "./hooks/useDeskState";
 import { LocalStorage } from "app/shared/localstorage/impl/localStorage";
+import { useEffect } from "react";
+import { IRefreshTokenService } from "app/shared/services/interface/IRefreshTokenService";
+import { AxiosRefreshTokenService } from "app/shared/services/AxiosRefreshTokenService";
+import IStorageService from "app/shared/localstorage/interfaces/IStorageService";
 
 export default function Desks() {
-    const axiosDeskService : IDeskService = new AxiosDeskService(new LocalStorage);
+    const localStorage: IStorageService = new LocalStorage();
+    const refreshTokenService: IRefreshTokenService = new AxiosRefreshTokenService();
+    const axiosDeskService: IDeskService = new AxiosDeskService(localStorage, refreshTokenService);
+
     const [desks, setDesks] = useDeksState();
 
-    axiosDeskService.getAllDesks().then((desks: IDesk[]) => {
-        setDesks(desks);
-    });
+    useEffect(() => {
+        axiosDeskService.getAllDesks().then((desks: IDesk[]) => {
+            setDesks(desks);
+        });
+    }, []);
 
     const isOpen = getSidebarState();
     const classes = classNames({

@@ -1,3 +1,3 @@
 export interface IRefreshTokenService {
-    refreshToken: () => Promise<string>;
+    refreshToken: (refreshToken: string) => Promise<string>;
 }
