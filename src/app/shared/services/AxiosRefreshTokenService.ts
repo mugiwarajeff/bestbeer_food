@@ -3,7 +3,6 @@ import { IRefreshTokenService } from "./interface/IRefreshTokenService";
 import { APIENDOPOINT } from "../constants/apiEndpoint";
 import { HttpException } from "../exceptions/httpException";
 import { UnauthorizedException } from "../exceptions/unauthorizedException";
-import { redirect } from "react-router-dom";
 
 export class AxiosRefreshTokenService implements IRefreshTokenService {
     private axios;
@@ -15,18 +14,15 @@ export class AxiosRefreshTokenService implements IRefreshTokenService {
         });
 
 
-        this.axios.interceptors.response.use(response => response, (error: AxiosError) => {
-
+        this.axios.interceptors.response.use(response => response, (error: AxiosError) => {          
             if (error.response?.status === 401) {
-                console.log("caiu no redirect");
                 alert("Login invalido... por favor realize novo login");
-
-                redirect("login");
-                console.log(error.response.status);
+                window.location.href = "/login";     
             }
-
-
+        
+            return Promise.reject(error);
         });
+        
     }
 
     public async refreshToken(refreshToken: string): Promise<string> {

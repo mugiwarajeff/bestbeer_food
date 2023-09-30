@@ -30,11 +30,13 @@ export class AxiosDeskService implements IDeskService {
 
                 if (responseStatusCode === 401 && originalRequest !== undefined) {
                     console.log("token invalido... obtendo novo token");
-
+                
                     const refreshToken: string = this.localStorage.getRefreshToken();
                     const newAccessToken = await this.refreshTokenService.refreshToken(refreshToken);
+
                     this.localStorage.saveAccessToken(newAccessToken);
 
+                    
                     originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
                     return this.axios(originalRequest);
                 }
@@ -42,12 +44,14 @@ export class AxiosDeskService implements IDeskService {
     }
 
     public async getAllDesks(): Promise<IDesk[]> {
-        const response: AxiosResponse = await this.axios.get("desks");
-
-        console.log(response.data);
-
-        const desks: IDesk[] = response.data;
-        return desks;
+        try {
+            const response: AxiosResponse = await this.axios.get("desks");
+            const desks: IDesk[] = response.data;
+            return desks;
+        }catch (error){
+            console.log(error);
+            return [];
+        }
     }
 
     deleteDesk(id: number): Promise<IDesk> {
