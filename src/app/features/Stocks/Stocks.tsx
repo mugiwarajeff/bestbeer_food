@@ -8,6 +8,9 @@ export default function Stocks() {
 
     return <section className={styles.stock}>
         <SearchBar placeHolder={placeHolder}/>
-        <Fab/>
+        <Fab onClick={() => {
+            console.log("");
+
+}}/>
     </section>;
 }

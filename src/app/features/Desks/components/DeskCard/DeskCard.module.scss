@@ -20,7 +20,22 @@
         }
     }
 
+    &__actions {
+        box-sizing: border-box;
+        position: relative;
+        z-index: 2;
+        margin: 10px 0 30px 0;
+        display: inline;
+        width: 300px;
+        
+        display: flex;
+        justify-content: end;
+        padding-top: 5px;
+        padding-right: 15px;
+    }
+
     &__itens {
+    
         height: 100%;
         width: 100%;
         display: flex;
@@ -28,10 +43,13 @@
         justify-content: space-between;
         align-items: center;
         text-align: center;
-
+        position: relative;
+        bottom: 75px;
+    
         h1 {
             margin: 10px 0 30px 0;
         }
+
 
         &__view_details {
             display: flex;

@@ -44,7 +44,7 @@ export default function Login() {
             navigator("/home");
             
         } catch(error) {
-            console.log(error);
+            
             if(error instanceof UnauthorizedException){
                 alert("Usuario ou senha invalidos... tente novamente");
             }else if (error instanceof ServerException){

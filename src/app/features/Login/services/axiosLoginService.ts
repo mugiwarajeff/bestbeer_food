@@ -1,30 +1,17 @@
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosInstance, AxiosResponse } from "axios";
 import { ILoginService } from "../interfaces/loginService";
 import { ILogin } from "../interfaces/login";
 import { CreateLoginDto } from "../interfaces/createLoginDto";
 import { UnauthorizedException } from "app/shared/exceptions/unauthorizedException";
 import { ServerException } from "app/shared/exceptions/serverException";
 import { APIENDOPOINT } from "app/shared/constants/apiEndpoint";
+import AxiosService from "app/shared/services/axiosService";
 
 export class AxiosLoginService implements ILoginService {
-    private axios;
+    private axios: AxiosInstance;
 
     constructor(){
-        this.axios = axios.create({
-            baseURL: APIENDOPOINT , 
-            headers: {"Content-Type": "application/json"}
-        });
-
-        this.axios.interceptors.response.use((response) => {
-
-            console.log(response.config);
-            return response;
-        }, (error ) => {
-
-            
-            console.log(error);
-            return error;
-        });
+        this.axios = AxiosService.getInstance();
     }
      
     public async createLogin (login: ILogin): Promise<CreateLoginDto> {
@@ -44,7 +31,6 @@ export class AxiosLoginService implements ILoginService {
         if(response.status === 500){
             throw new ServerException();
         }
-
         throw Error();
     }
 }

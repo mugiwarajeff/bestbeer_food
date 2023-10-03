@@ -8,6 +8,9 @@ export default function Products(){
 
     return <section className={styles.products}>
         <SearchBar placeHolder={placeHolder}/>
-        <Fab/>
+        <Fab onClick={() => {
+            console.log("");
+
+}}/>
     </section>;
 }

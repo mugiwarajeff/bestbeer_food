@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import { IRefreshTokenService } from "app/shared/services/interface/IRefreshTokenService";
 import { AxiosRefreshTokenService } from "app/shared/services/AxiosRefreshTokenService";
 import IStorageService from "app/shared/localstorage/interfaces/IStorageService";
+import Fab from "app/shared/components/Fab/Fab";
 
 export default function Desks() {
     const localStorage: IStorageService = new LocalStorage();
@@ -34,8 +35,19 @@ export default function Desks() {
     return <section className={classes}>
         {desks.map(
             (desk) => <DeskCard
+                onClick={  async () => {
+                    const deletedDesk  = await axiosDeskService.deleteDesk(desk.id);
+                    console.log(deletedDesk);
+                    setDesks(desks.filter(desk => desk.id !== deletedDesk?.id));
+                } }
                 key={desk.id}
                 desk={desk} />
         )}
+        <Fab onClick={ async () => {
+            const newDesk = await axiosDeskService.create({  
+                description: "teste de criação de mesa", 
+                available: true});
+            setDesks([...desks, newDesk!]);
+        }} />
     </section>;
 }

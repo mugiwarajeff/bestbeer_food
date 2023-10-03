@@ -30,6 +30,8 @@
         "semi": [
             "error",
             "always"
-        ]
+        ],
+        "no-empty-function": "off",
+        "@typescript-estlint/no-empty-function": "off"
     }
 }

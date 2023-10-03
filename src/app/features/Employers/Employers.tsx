@@ -10,6 +10,9 @@ export default function Employers() {
     return <section className={styles.employers}>
         <SearchBar placeHolder={placeHolder} />
         <UserTable values={employers} />
-        <Fab />
+        <Fab onClick={() => {
+
+            console.log("");
+}} />
     </section>;
 }

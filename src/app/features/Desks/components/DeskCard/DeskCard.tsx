@@ -1,15 +1,20 @@
 import { IDesk } from "../../interfaces/IDesk";
 import styles from "./DeskCard.module.scss";
-import { AiOutlineEye } from "react-icons/ai";
-import { FaMoneyBills } from "react-icons/fa6";
+import { AiOutlineEye, AiOutlineClose, AiOutlineEdit } from "react-icons/ai";
+import { FaMoneyBills,  } from "react-icons/fa6";
 
 interface DeskCardProps {
-    desk: IDesk
+    desk: IDesk,
+    onClick: React.MouseEventHandler<SVGElement> | undefined
 }
 
 export default function DeskCard(props: DeskCardProps){
 
     return <div className={styles.deskCard}>
+            <div className={styles.deskCard__actions}>
+                <AiOutlineClose size={32} color="red" className={styles.customIcon} onClick={props.onClick}/>
+                <AiOutlineEdit size={32} color="yellow" className={styles.customIcon}/> 
+            </div>
             <div className={styles.deskCard__itens}>
                 <div>
                     <h1>
