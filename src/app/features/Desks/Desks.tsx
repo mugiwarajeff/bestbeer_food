@@ -12,6 +12,9 @@ import { IRefreshTokenService } from "app/shared/services/interface/IRefreshToke
 import { AxiosRefreshTokenService } from "app/shared/services/AxiosRefreshTokenService";
 import IStorageService from "app/shared/localstorage/interfaces/IStorageService";
 import Fab from "app/shared/components/Fab/Fab";
+import DeskForm from "./components/DeskForm/DeskForm";
+
+import useSetDeskFormState from "./hooks/useSetDeskFormState";
 
 export default function Desks() {
     const localStorage: IStorageService = new LocalStorage();
@@ -19,6 +22,7 @@ export default function Desks() {
     const axiosDeskService: IDeskService = new AxiosDeskService(localStorage, refreshTokenService);
 
     const [desks, setDesks] = useDeksState();
+    const setIsFormOpen = useSetDeskFormState();
 
     useEffect(() => {
         axiosDeskService.getAllDesks().then((desks: IDesk[]) => {
@@ -35,19 +39,23 @@ export default function Desks() {
     return <section className={classes}>
         {desks.map(
             (desk) => <DeskCard
-                onClick={  async () => {
-                    const deletedDesk  = await axiosDeskService.deleteDesk(desk.id);
+                onClick={async () => {
+                    const deletedDesk = await axiosDeskService.deleteDesk(desk.id);
                     console.log(deletedDesk);
                     setDesks(desks.filter(desk => desk.id !== deletedDesk?.id));
-                } }
+                }}
                 key={desk.id}
                 desk={desk} />
         )}
-        <Fab onClick={ async () => {
-            const newDesk = await axiosDeskService.create({  
-                description: "teste de criação de mesa", 
-                available: true});
+        <Fab onClick={async () => setIsFormOpen(true)} />
+        <DeskForm onConfirmCallback={async (description) => {
+            const newDesk = await axiosDeskService.create({
+                description: description,
+                available: true
+            });
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             setDesks([...desks, newDesk!]);
+            setIsFormOpen(false);
         }} />
     </section>;
 }

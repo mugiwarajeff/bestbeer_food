@@ -1,0 +1,44 @@
+@import "app/shared/theme/colors.scss";
+
+.dialog {
+    position: absolute;
+    z-index: 2;
+    width: 35%;
+    height: 30%;
+    right: 0px;
+    margin: 0 25% 0 25%;
+    padding: 0 20px 20px 20px;
+    background-color: $purple-full-dark;
+    border: 3px solid #f9f9f9;
+    border-radius: 25px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+
+    &__closed {
+        display: none;
+    }
+
+    &__title {
+        color: #f9f9f9;
+        font-size: 2rem;
+    }
+
+    &__buttonBox {
+        box-sizing: border-box;
+        width: 100%;
+        display: flex;
+        justify-content: end;
+        padding-right: 30px;
+    }
+
+    &__button {
+        margin: 0px 10px;
+        width: 20%;
+        height: 40px;
+        border-radius: 5px;
+        border: none;
+    }
+}
