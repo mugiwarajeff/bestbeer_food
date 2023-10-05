@@ -7,14 +7,15 @@ import { IDeskService } from "./interfaces/IDeskService";
 import { AxiosDeskService } from "./services/axiosDeskService";
 import useDeksState from "./hooks/useDeskState";
 import { LocalStorage } from "app/shared/localstorage/impl/localStorage";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { IRefreshTokenService } from "app/shared/services/interface/IRefreshTokenService";
 import { AxiosRefreshTokenService } from "app/shared/services/AxiosRefreshTokenService";
 import IStorageService from "app/shared/localstorage/interfaces/IStorageService";
 import Fab from "app/shared/components/Fab/Fab";
-import DeskForm from "./components/DeskForm/DeskForm";
 
-import useSetDeskFormState from "./hooks/useSetDeskFormState";
+
+import Form from "app/shared/components/Form/Form";
+import FormInput from "app/shared/components/FormInput/FormInput";
 
 export default function Desks() {
     const localStorage: IStorageService = new LocalStorage();
@@ -22,7 +23,8 @@ export default function Desks() {
     const axiosDeskService: IDeskService = new AxiosDeskService(localStorage, refreshTokenService);
 
     const [desks, setDesks] = useDeksState();
-    const setIsFormOpen = useSetDeskFormState();
+    const [formIsOpen, setFormIsOpen] = useState<boolean>(false);
+    const [formDescription, setFormDescription] = useState<string>("");
 
     useEffect(() => {
         axiosDeskService.getAllDesks().then((desks: IDesk[]) => {
@@ -36,6 +38,18 @@ export default function Desks() {
         [styles.desks__open]: !isOpen
     });
 
+    async function submitHandler(event: React.FormEvent<HTMLFormElement>) {
+        event.preventDefault();
+        const newDesk = await axiosDeskService.create({
+            description: formDescription,
+            available: true
+        });
+
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        setDesks([...desks, newDesk!]);
+        setFormIsOpen(false);
+    }
+
     return <section className={classes}>
         {desks.map(
             (desk) => <DeskCard
@@ -47,15 +61,22 @@ export default function Desks() {
                 key={desk.id}
                 desk={desk} />
         )}
-        <Fab onClick={async () => setIsFormOpen(true)} />
-        <DeskForm onConfirmCallback={async (description) => {
+        <Fab onClick={async () => setFormIsOpen(true)} />
+        <Form title="Criar Mesa" isOpen={formIsOpen} onSubmit={submitHandler} onCancel={() => setFormIsOpen(false)}>
+            <FormInput name="description" value={formDescription} onChange={event => setFormDescription(event.target.value)} />
+            <FormInput name="description" value={formDescription} onChange={event => setFormDescription(event.target.value)} />
+            <FormInput name="description" value={formDescription} onChange={event => setFormDescription(event.target.value)} />
+            <FormInput name="description" value={formDescription} onChange={event => setFormDescription(event.target.value)} />
+        </Form>
+    </section >;
+}
+
+/**async (description) => {
             const newDesk = await axiosDeskService.create({
                 description: description,
                 available: true
             });
+
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             setDesks([...desks, newDesk!]);
-            setIsFormOpen(false);
-        }} />
-    </section>;
-}
+            setFormIsOpen(false); */
