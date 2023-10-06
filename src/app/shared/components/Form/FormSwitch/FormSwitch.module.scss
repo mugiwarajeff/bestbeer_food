@@ -1,0 +1,14 @@
+.switch {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    color: #f9f9f9;
+    align-self: flex-end;
+    margin-right: 15%;
+    margin-bottom: 30px;
+
+    label {
+        margin-bottom: 5px;
+    }
+}

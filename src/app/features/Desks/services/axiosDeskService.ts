@@ -39,7 +39,7 @@ export class AxiosDeskService implements IDeskService {
     }
 
     public async updateDesk(desk: IDesk): Promise<IDesk | undefined> {
-        const response: AxiosResponse = await this.axios.put(`desks/${desk.id}`, desk);
+        const response: AxiosResponse = await this.axios.put(`desks/${desk.id}`, { "description": desk.description, "available": desk.available });
         const updatedDesk: IDesk = response.data;
 
         return updatedDesk;

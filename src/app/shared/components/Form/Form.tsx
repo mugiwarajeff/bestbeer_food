@@ -15,7 +15,7 @@ export default function Form(props: FormProps) {
 
     const classes = classNames({ [styles.dialog]: true, [styles.dialog__closed]: !props.isOpen });
 
-    return <div style={{ height: 150 + (React.Children.count(props.children) * 80) }} className={classes}>
+    return <div style={{ height: 160 + (React.Children.count(props.children) * 80) }} className={classes}>
         <h2 className={styles.dialog__title}>{props.title}</h2>
         <form action="" onSubmit={props.onSubmit}>
             {props.children}
