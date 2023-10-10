@@ -1,15 +1,14 @@
 import { IDesk } from "../interfaces/IDesk";
 import { IDeskService } from "../interfaces/IDeskService";
 import { AxiosInstance, AxiosResponse } from "axios";
-import IStorageService from "app/shared/localstorage/interfaces/IStorageService";
-import { IRefreshTokenService } from "app/shared/services/interface/IRefreshTokenService";
+
 import AxiosService from "app/shared/services/axiosService";
 
 export class AxiosDeskService implements IDeskService {
     private axios: AxiosInstance;
 
 
-    constructor(localStorage: IStorageService, refreshTokenService: IRefreshTokenService) {
+    constructor() {
         this.axios = AxiosService.getInstance();
     }
 

@@ -5,25 +5,33 @@ import UserTable from "./components/UserTable/UserTable";
 import { IEmpoyersService } from "./interfaces/IEmployersService";
 import AxiosEmployerService from "./services/AxiosEmployerService";
 import { IEmployer } from "./interfaces/IEmployer";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useEmployers from "./hooks/useEmployers";
+import CreateUserForm from "./components/UserTable/CreateUserForm/CreateUserForm";
 export default function Employers() {
-    const employersService : IEmpoyersService = new AxiosEmployerService();
+    const employersService: IEmpoyersService = new AxiosEmployerService();
     const [employers, setEmployers] = useEmployers();
+    const [createFormOpen, setCreateFormOpen] = useState<boolean>(false);
 
     useEffect(() => {
         employersService.getAllEmployers()
-            .then((employers: IEmployer[]) => console.log("na pagina: " + employers[0]));
+            .then((newEmployers: IEmployer[]) => {
+                setEmployers(newEmployers);
+            });
     }, []);
 
     const placeHolder = "Pesquise o funcionário aqui";
 
+    const cancelForm = () => {
+        setCreateFormOpen(false);
+    };
+
     return <section className={styles.employers}>
         <SearchBar placeHolder={placeHolder} />
-        <UserTable values={employers} />
+        <UserTable values={employers} employerServiceInstance={employersService} />
         <Fab onClick={() => {
-
-            console.log("");
-}} />
+            setCreateFormOpen(true);
+        }} />
+        <CreateUserForm isOpen={createFormOpen} onClose={cancelForm} employerServiceInstance={employersService} />
     </section>;
 }

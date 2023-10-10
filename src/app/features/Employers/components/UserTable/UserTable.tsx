@@ -2,59 +2,86 @@ import styles from "./UserTable.module.scss";
 import { FaEdit } from "react-icons/fa";
 import { AiOutlineClose, AiOutlineEdit } from "react-icons/ai";
 import { IEmployer } from "../../interfaces/IEmployer";
+import { IEmpoyersService } from "../../interfaces/IEmployersService";
+import useEmployers from "../../hooks/useEmployers";
+import { useCurrentUser } from "app/shared/hooks/useCurrentUser";
 
 interface TableProps {
     values: IEmployer[]
+    employerServiceInstance: IEmpoyersService
 }
 
-export default function UserTable({ values }: TableProps) {
+export default function UserTable({ values, employerServiceInstance }: TableProps) {
+    const [employers, setEmployers] = useEmployers();
+    const currentUser = useCurrentUser();
 
-    const typeProperties = Object.keys(values[0]);
+    const typeProperties = values.length > 0 ? Object.keys(values[0]) : [];
     typeProperties.shift();
+
+    /**
+     * typeProperties.map((propety) => <th key={typeProperties.indexOf(propety)}>
+                        {propety.charAt(0).toUpperCase() + propety.slice(1)}
+                    </th>)
+     */
+
+    const deleteUser = async (id: number) => {
+
+        if (id === 1) {
+            alert("Usuario administrador não pode ser escluido");
+        } else if (currentUser?.id === id) {
+            alert("Voce não pode deletar o usuario logado no momento");
+        } else {
+            const deletedEmployer = await employerServiceInstance.deleteEmployer(id);
+
+            if (deletedEmployer !== undefined) {
+                setEmployers(employers.filter(employer => employer.id != deletedEmployer?.id));
+            }
+        }
+    };
 
     return <div className={styles.userTable}>
         <table>
             <thead>
                 <tr>
-                    {typeProperties.map((propety) => <th key={typeProperties.indexOf(propety)}>
-                        {propety.charAt(0).toUpperCase() + propety.slice(1)}
-                    </th>)}
+                    <td>
+                        User
+                    </td>
+                    <td>
+                        CPF
+                    </td>
+                    <td>
+                        Telefone
+                    </td>
+                    <td>
+                        Email
+                    </td>
                     <th>
                         Actions
                     </th>
                 </tr>
             </thead>
             <tbody>
-                {values.map((employer) => <tr key={employer.id}>
+                {values.length > 0 ? values.map((employer) => <tr key={employer.id}>
                     <td>
-                        {employer.name}
+                        {employer.user}
                     </td>
                     <td>
-                        {employer.email}
-                    </td>
-                    <td>
-                        {employer.email}
-                    </td>
-                    <td>
-                        {employer.email}
-                    </td>
-                    <td>
-                        {employer.email}
-                    </td>
-                    <td>
-                        {employer.email}
+                        {employer.cpf}
                     </td>
                     <td>
                         {employer.telefone}
                     </td>
                     <td>
+                        {employer.email}
+                    </td>
+                    <td>
                         <div className={styles.iconsContainer}>
                             <FaEdit size={40} />
                             <AiOutlineEdit size={40} />
-                            <AiOutlineClose size={40} color="red" />
+                            <AiOutlineClose size={40} color="red" onClick={() => deleteUser(employer.id)} />
                         </div>
                     </td>
-                </tr>)
+                </tr>) : <div></div>
                 }
             </tbody>
         </table>

@@ -5,6 +5,8 @@
     z-index: 2;
     width: 35%;
     height: 30%;
+    max-height: 600px;
+    overflow-y: scroll;
     right: 0px;
     margin: 0 25% 0 25%;
     padding: 0 20px 20px 20px;
@@ -37,6 +39,7 @@
         display: flex;
         justify-content: end;
         padding-right: 30px;
+        padding-bottom: 20px;
     }
 
     &__button {
