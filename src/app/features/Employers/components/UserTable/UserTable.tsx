@@ -1,7 +1,7 @@
 import styles from "./UserTable.module.scss";
 import { FaEdit } from "react-icons/fa";
 import { AiOutlineClose, AiOutlineEdit } from "react-icons/ai";
-import { IEmployer } from "../../interfaces/employers";
+import { IEmployer } from "../../interfaces/IEmployer";
 
 interface TableProps {
     values: IEmployer[]
@@ -28,6 +28,18 @@ export default function UserTable({ values }: TableProps) {
                 {values.map((employer) => <tr key={employer.id}>
                     <td>
                         {employer.name}
+                    </td>
+                    <td>
+                        {employer.email}
+                    </td>
+                    <td>
+                        {employer.email}
+                    </td>
+                    <td>
+                        {employer.email}
+                    </td>
+                    <td>
+                        {employer.email}
                     </td>
                     <td>
                         {employer.email}

@@ -7,14 +7,9 @@ import AxiosService from "app/shared/services/axiosService";
 
 export class AxiosDeskService implements IDeskService {
     private axios: AxiosInstance;
-    private localStorage: IStorageService;
-    private refreshTokenService: IRefreshTokenService;
 
 
     constructor(localStorage: IStorageService, refreshTokenService: IRefreshTokenService) {
-        this.localStorage = localStorage;
-        this.refreshTokenService = refreshTokenService;
-
         this.axios = AxiosService.getInstance();
     }
 
