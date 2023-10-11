@@ -53,7 +53,7 @@ export default function CreateUserForm(props: CreateUserForm) {
         onCancel={props.onClose}>
         <InputForm
             name={"Usuário"}
-            register={{ ...register("user", { required: "*Campo Obrigatório" }) }}
+            register={{ ...register("user", { required: "*Campo Obrigatório", },) }}
             value={user}
             onChange={event => setUser(event.target.value)}
             errorState={errors.user} />
