@@ -10,11 +10,21 @@
 
     margin-bottom: 30px;
 
+    label {
+        span {
+            color: red;
+        }
+    }
+
     input {
         background-color: $purple-full-dark;
         height: 30px;
         width: 100%;
         border-bottom: 3px solid #f9f9f9;
         color: #f9f9f9;
+    }
+
+    .errorMessage {
+        color: white;
     }
 }
