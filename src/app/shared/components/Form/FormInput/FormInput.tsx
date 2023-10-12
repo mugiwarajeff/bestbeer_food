@@ -17,11 +17,12 @@ export default function FormInput(props: FormInputProps) {
         <div className={styles.deskFormInput}>
             <label htmlFor={props.name}>{props.name} <span>{props.errorState ? props.errorState.message?.toString() : ""}</span></label>
             <input
-                type={props.name}
+                {...props.register} 
+                name={props.name}
                 value={props.value}
                 onChange={props.onChange}
                 readOnly={props.readonly}
-                {...props.register} />
+                />
         </div>
     </div>;
 }

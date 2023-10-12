@@ -7,7 +7,7 @@ import AxiosEmployerService from "./services/AxiosEmployerService";
 import { IEmployer } from "./interfaces/IEmployer";
 import { useEffect, useState } from "react";
 import useEmployers from "./hooks/useEmployers";
-import CreateUserForm from "./components/UserTable/CreateUserForm/CreateUserForm";
+import CreateUserForm from "./components/CreateUserForm/CreateUserForm";
 export default function Employers() {
     const employersService: IEmpoyersService = new AxiosEmployerService();
     const [employers, setEmployers] = useEmployers();
