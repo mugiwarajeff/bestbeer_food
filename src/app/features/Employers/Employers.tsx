@@ -8,10 +8,12 @@ import { IEmployer } from "./interfaces/IEmployer";
 import { useEffect, useState } from "react";
 import useEmployers from "./hooks/useEmployers";
 import CreateUserForm from "./components/CreateUserForm/CreateUserForm";
+import UpdateUserForm from "./components/UpdateUserForm/UpdateUserForm";
 export default function Employers() {
     const employersService: IEmpoyersService = new AxiosEmployerService();
     const [employers, setEmployers] = useEmployers();
     const [createFormOpen, setCreateFormOpen] = useState<boolean>(false);
+    const [updateFormOpen, setUpdateFormOpen] = useState<boolean>(false);
 
     useEffect(() => {
         employersService.getAllEmployers()
@@ -24,6 +26,18 @@ export default function Employers() {
 
     const cancelForm = () => {
         setCreateFormOpen(false);
+        setUpdateFormOpen(false);
+    };
+
+    const demoEmployer: IEmployer = {
+        cpf: "072.855.765-73",
+        email: "jeffersoncerqueira75@gmail.com",
+        id: 0,
+        name: "Jefferson",
+        password: "1234Ab",
+        role: "garcon",
+        telefone: "55 77 99858-7437",
+        user: "jefferson"
     };
 
     return <section className={styles.employers}>
@@ -33,5 +47,6 @@ export default function Employers() {
             setCreateFormOpen(true);
         }} />
         <CreateUserForm isOpen={createFormOpen} onClose={cancelForm} employerServiceInstance={employersService} />
+        <UpdateUserForm isOpen={updateFormOpen} onClose={cancelForm} employerServiceInstance={employersService} user={demoEmployer} />
     </section>;
 }

@@ -68,18 +68,20 @@ export default function CreateUserForm(props: CreateUserForm) {
             value={cpf}
             onChange={event => setCpf(event.target.value)}
             register={{
-                ...register("cpf", )
+                ...register("cpf", { pattern: { value: /(\d{3}).(\d{3}).(\d{3})-(\d{2})/, message: "CPF Invalido!" } })
             }}
             errorState={errors.cpf} />
         <InputForm
             name={"Telefone"}
             value={phone}
             onChange={event => setPhone(event.target.value)}
-            register={{...register("phone", 
-                {
-                    required: "Campo Obrigatório",
-                    pattern: { value: /[d][d] []/ ,message: "Invalido!, deve atender ao padrão: "}
-                })}}
+            register={{
+                ...register("phone",
+                    {
+                        required: "Campo Obrigatório",
+                        pattern: { value: /(\d{2})\s(\d{2})\s(\d{4,5}-\d{4})/g, message: "Invalido!, deve atender ao padrão: (xx xx xxxxx-xxxx) " }
+                    })
+            }}
             errorState={errors.phone} />
         <InputForm
             name={"E-mail"}
@@ -87,14 +89,37 @@ export default function CreateUserForm(props: CreateUserForm) {
             onChange={event => {
                 setEmail(event.target.value);
                 console.log(email);
-            }} />
+            }}
+            register={{
+                ...register("email", {
+                    required: "*Campo Obrigatório",
+                    pattern: { value: /(.*)@(.*).(com)(.br)?/g, message: "E-mail Invalido" }
+                })
+            }}
+            errorState={errors.email}
+        />
         <InputForm
             name={"Role"}
             value={role}
-            onChange={event => setRole(event.target.value)} />
+            onChange={event => setRole(event.target.value)}
+            register={{
+                ...register("role", {
+                    required: "*Campo Obrigatório"
+                })
+            }}
+            errorState={errors.role}
+        />
         <InputForm
             name={"Password"}
             value={password}
-            onChange={event => setPassword(event.target.value)} />
+            onChange={event => setPassword(event.target.value)}
+            register={{
+                ...register("password", {
+                    required: "*Campo Obrigatório",
+                    pattern: { value: /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$/, message: "Senha não é forte o suficiente" }
+                })
+            }}
+            errorState={errors.password}
+        />
     </Form>;
 }
