@@ -38,7 +38,16 @@ export default function CreateUserForm(props: CreateUserForm) {
     }, [props.isOpen]);
 
     const createHandler = async () => {
-        const newEmployer = await employerService.createEmployer({ user, name, cpf: cpf.replace(".", "").replace("-", ""), telefone: phone, email, role, password });
+        const newEmployer = await employerService.createEmployer(
+            { 
+                user, 
+                name, 
+                cpf: cpf.replaceAll(".", "").replace("-", ""), 
+                telefone: `+${phone}`, 
+                email, 
+                role, 
+                password });
+        console.log(newEmployer);
         if (newEmployer !== undefined) {
             setEmployers([...employers, newEmployer]);
         }

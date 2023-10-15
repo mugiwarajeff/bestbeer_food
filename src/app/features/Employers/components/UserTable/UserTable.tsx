@@ -7,11 +7,12 @@ import useEmployers from "../../hooks/useEmployers";
 import { useCurrentUser } from "app/shared/hooks/useCurrentUser";
 
 interface TableProps {
-    values: IEmployer[]
+    values: IEmployer[],
+    onEditItem: (employer: IEmployer) => void,
     employerServiceInstance: IEmpoyersService
 }
 
-export default function UserTable({ values, employerServiceInstance }: TableProps) {
+export default function UserTable({ values, employerServiceInstance, onEditItem }: TableProps) {
     const [employers, setEmployers] = useEmployers();
     const currentUser = useCurrentUser();
 
@@ -77,7 +78,7 @@ export default function UserTable({ values, employerServiceInstance }: TableProp
                     <td>
                         <div className={styles.iconsContainer}>
                             <FaEdit size={40} />
-                            <AiOutlineEdit size={40} />
+                            <AiOutlineEdit size={40} onClick={() => onEditItem(employer)}/>
                             <AiOutlineClose size={40} color="red" onClick={() => deleteUser(employer.id)} />
                         </div>
                     </td>

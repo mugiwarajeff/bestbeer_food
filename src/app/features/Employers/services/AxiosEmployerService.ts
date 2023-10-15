@@ -36,20 +36,23 @@ export default class AxiosEmployerService implements IEmpoyersService {
 
     public async updateEmployer(employer: IEmployer): Promise<IEmployer | undefined> {
         try {
-            const response: AxiosResponse = await this.axios.put(`users/${employer.id}`, {
-                user: employer.user,
+            const payload = {
                 name: employer.name,
                 cpf: employer.cpf,
                 telefone: employer.telefone,
                 email: employer.email,
                 role: employer.role,
                 password: employer.password
-            });
+            };
+
+            console.log(payload);
+            const response: AxiosResponse = await this.axios.put(`users/${employer.id}`, payload);
 
             const updatedEmployer: IEmployer = response.data;
 
             return updatedEmployer;
         } catch (error) {
+            console.log(error);
             alert("erro ao atualizar usuario");
         }
     }

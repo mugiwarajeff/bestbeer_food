@@ -14,6 +14,7 @@ export default function Employers() {
     const [employers, setEmployers] = useEmployers();
     const [createFormOpen, setCreateFormOpen] = useState<boolean>(false);
     const [updateFormOpen, setUpdateFormOpen] = useState<boolean>(false);
+    const [selectedEmployer, setSelectedEmployer] = useState<IEmployer>();
 
     useEffect(() => {
         employersService.getAllEmployers()
@@ -29,24 +30,29 @@ export default function Employers() {
         setUpdateFormOpen(false);
     };
 
-    const demoEmployer: IEmployer = {
-        cpf: "072.855.765-73",
-        email: "jeffersoncerqueira75@gmail.com",
-        id: 0,
-        name: "Jefferson",
-        password: "1234Ab",
-        role: "garcon",
-        telefone: "55 77 99858-7437",
-        user: "jefferson"
+    const onClickToEditItem = (employer: IEmployer) => {
+        setSelectedEmployer(employer);
+        setUpdateFormOpen(true);
     };
 
     return <section className={styles.employers}>
         <SearchBar placeHolder={placeHolder} />
-        <UserTable values={employers} employerServiceInstance={employersService} />
+        <UserTable 
+            values={employers} 
+            employerServiceInstance={employersService}
+            onEditItem={onClickToEditItem}
+             />
         <Fab onClick={() => {
             setCreateFormOpen(true);
         }} />
-        <CreateUserForm isOpen={createFormOpen} onClose={cancelForm} employerServiceInstance={employersService} />
-        <UpdateUserForm isOpen={updateFormOpen} onClose={cancelForm} employerServiceInstance={employersService} user={demoEmployer} />
+        <CreateUserForm 
+            isOpen={createFormOpen} 
+            onClose={cancelForm} 
+            employerServiceInstance={employersService} />
+        <UpdateUserForm 
+            isOpen={updateFormOpen} 
+            onClose={cancelForm} 
+            employerServiceInstance={employersService} 
+            user={selectedEmployer!} />
     </section>;
 }
