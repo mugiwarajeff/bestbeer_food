@@ -5,6 +5,7 @@ import { FaMoneyBills, } from "react-icons/fa6";
 
 interface DeskCardProps {
     desk: IDesk,
+    deskNumber: number,
     onClick: React.MouseEventHandler<SVGElement> | undefined,
     onEdit: React.MouseEventHandler<SVGElement> | undefined
 }
@@ -19,7 +20,7 @@ export default function DeskCard(props: DeskCardProps) {
         <div className={styles.deskCard__itens}>
             <div>
                 <h1>
-                    {`Mesa ${props.desk.id}`}
+                    {`Mesa ${props.deskNumber}`}
                 </h1>
                 {props.desk.available ?
                     "Disponivel" :

@@ -46,6 +46,7 @@ export default function Desks() {
                     setEditingDesk(desk);
                     setUpdateFormIsOpen(true);
                 }}
+                deskNumber={desks.indexOf(desk) + 1}
                 key={desk.id}
                 desk={desk} />
         )}

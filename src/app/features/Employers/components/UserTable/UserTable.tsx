@@ -1,6 +1,6 @@
 import styles from "./UserTable.module.scss";
 import { FaEdit } from "react-icons/fa";
-import { AiOutlineClose, AiOutlineEdit } from "react-icons/ai";
+import { AiOutlineClose, AiOutlineEdit, AiFillEye } from "react-icons/ai";
 import { IEmployer } from "../../interfaces/IEmployer";
 import { IEmpoyersService } from "../../interfaces/IEmployersService";
 import useEmployers from "../../hooks/useEmployers";
@@ -77,8 +77,8 @@ export default function UserTable({ values, employerServiceInstance, onEditItem 
                     </td>
                     <td>
                         <div className={styles.iconsContainer}>
-                            <FaEdit size={40} />
-                            <AiOutlineEdit size={40} onClick={() => onEditItem(employer)}/>
+                            <AiFillEye size={40} />
+                            <AiOutlineEdit size={40} onClick={() => onEditItem(employer)} />
                             <AiOutlineClose size={40} color="red" onClick={() => deleteUser(employer.id)} />
                         </div>
                     </td>
