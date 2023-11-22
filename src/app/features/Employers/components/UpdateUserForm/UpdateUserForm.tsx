@@ -16,34 +16,35 @@ interface UpdateUserFormProps {
 
 export default function UpdateUserForm(props: UpdateUserFormProps) {
 
-    const { handleSubmit, register, formState } = useForm({ mode: "onSubmit" });
+    const { handleSubmit, register, formState } = useForm({ mode: "onChange" });
     const { errors } = formState;
     const [employers, setEmployers] = useEmployers();
 
     const updateHandler = async () => {
         const updatedEmployer = await props.employerServiceInstance.updateEmployer({
-            id: props.user.id, 
-            user, 
-            name, 
-            cpf: cpf.replaceAll(".", "").replace("-", ""), 
+            id: props.user.id,
+            user,
+            name,
+            cpf: cpf.replaceAll(".", "").replace("-", ""),
             telefone: phone,
-            email, 
-            role, 
-            password});
+            email,
+            role,
+            password
+        });
 
-        if(updatedEmployer !== undefined){
+        if (updatedEmployer !== undefined) {
             setEmployers(employers.map(employers => {
-                if(employers.id === updatedEmployer.id){
+                if (employers.id === updatedEmployer.id) {
                     employers = updatedEmployer;
                 }
-    
+
                 return employers;
             }));
-        }else {
+        } else {
             alert("Erro ao atualizar Usuário");
         }
 
-        
+
         props.onClose();
     };
 
@@ -56,7 +57,7 @@ export default function UpdateUserForm(props: UpdateUserFormProps) {
     const [password, setPassword] = useState<string>("");
 
     useEffect(() => {
-        if(props.user !== undefined){
+        if (props.user !== undefined) {
             setUser(props.user.user);
             setName(props.user.name);
             setCpf(props.user.cpf);
@@ -64,7 +65,7 @@ export default function UpdateUserForm(props: UpdateUserFormProps) {
             setEmail(props.user.email);
             setRole(props.user.role);
             setPassword(props.user.password);
-        }else {
+        } else {
             setUser("");
             setName("");
             setCpf("");
@@ -73,7 +74,7 @@ export default function UpdateUserForm(props: UpdateUserFormProps) {
             setRole("");
             setPassword("");
         }
-       
+
     }, [props.isOpen]);
 
 

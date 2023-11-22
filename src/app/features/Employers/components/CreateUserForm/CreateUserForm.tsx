@@ -16,7 +16,7 @@ export default function CreateUserForm(props: CreateUserForm) {
     const employerService: IEmpoyersService = props.employerServiceInstance;
 
     const [employers, setEmployers] = useEmployers();
-    const { handleSubmit, register, formState } = useForm({ mode: "onSubmit" });
+    const { handleSubmit, register, formState } = useForm({ mode: "onChange" });
     const { errors } = formState;
 
     const [user, setUser] = useState<string>("");
@@ -39,14 +39,15 @@ export default function CreateUserForm(props: CreateUserForm) {
 
     const createHandler = async () => {
         const newEmployer = await employerService.createEmployer(
-            { 
-                user, 
-                name, 
-                cpf: cpf.replaceAll(".", "").replace("-", ""), 
-                telefone: `+${phone}`, 
-                email, 
-                role, 
-                password });
+            {
+                user,
+                name,
+                cpf: cpf.replaceAll(".", "").replace("-", ""),
+                telefone: `+${phone}`,
+                email,
+                role,
+                password
+            });
         console.log(newEmployer);
         if (newEmployer !== undefined) {
             setEmployers([...employers, newEmployer]);

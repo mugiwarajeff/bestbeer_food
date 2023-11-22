@@ -37,22 +37,22 @@ export default function Employers() {
 
     return <section className={styles.employers}>
         <SearchBar placeHolder={placeHolder} />
-        <UserTable 
-            values={employers} 
+        <UserTable
+            values={employers}
             employerServiceInstance={employersService}
             onEditItem={onClickToEditItem}
-             />
+        />
         <Fab onClick={() => {
             setCreateFormOpen(true);
         }} />
-        <CreateUserForm 
-            isOpen={createFormOpen} 
-            onClose={cancelForm} 
+        <CreateUserForm
+            isOpen={createFormOpen}
+            onClose={cancelForm}
             employerServiceInstance={employersService} />
-        <UpdateUserForm 
-            isOpen={updateFormOpen} 
-            onClose={cancelForm} 
-            employerServiceInstance={employersService} 
+        <UpdateUserForm
+            isOpen={updateFormOpen}
+            onClose={cancelForm}
+            employerServiceInstance={employersService}
             user={selectedEmployer!} />
     </section>;
 }

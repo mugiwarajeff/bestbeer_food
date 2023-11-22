@@ -12,6 +12,7 @@ interface FormInputProps {
 }
 
 export default function FormInput(props: FormInputProps) {
+    console.log(props.errorState);
 
     return <div className={styles.formInput}>
         <div className={styles.deskFormInput}>
@@ -20,7 +21,7 @@ export default function FormInput(props: FormInputProps) {
                 name={props.name}
                 value={props.value}
                 readOnly={props.readonly}
-                {...props.register}
+                //{...props.register}
                 onChange={props.onChange}
             />
         </div>
