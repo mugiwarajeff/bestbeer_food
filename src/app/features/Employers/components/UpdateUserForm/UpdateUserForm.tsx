@@ -5,6 +5,7 @@ import { IEmployer } from "../../interfaces/IEmployer";
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 import useEmployers from "../../hooks/useEmployers";
+import FormSelecion from "app/shared/components/Form/FormSelection/FormSelecion";
 
 
 interface UpdateUserFormProps {
@@ -131,17 +132,12 @@ export default function UpdateUserForm(props: UpdateUserFormProps) {
             }}
             errorState={errors.email}
         />
-        <InputForm
-            name={"Role"}
-            value={role}
-            onChange={event => setRole(event.target.value)}
-            register={{
-                ...register("role", {
-                    required: "*Campo Obrigatório"
-                })
-            }}
-            errorState={errors.role}
-        />
+        <FormSelecion name={"Função"} value={role} onChange={event => setRole(event.target.value)} values={[
+            "admin",
+            "Garçon",
+            "Caixa",
+            "Gerente"
+        ]} errorState={errors.role} />
         <InputForm
             name={"Password"}
             value={password}

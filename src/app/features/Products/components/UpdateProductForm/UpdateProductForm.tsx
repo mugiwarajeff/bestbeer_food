@@ -5,6 +5,7 @@ import useProducts from "../../hooks/UseProducts";
 import { useEffect } from "react";
 import FormInput from "app/shared/components/Form/FormInput/FormInput";
 import Form from "app/shared/components/Form/Form";
+import FormSelecion from "app/shared/components/Form/FormSelection/FormSelecion";
 
 interface UpdateUserFormProps {
     isOpen: boolean,
@@ -91,11 +92,11 @@ export default function UpdateUserForm(props: UpdateUserFormProps) {
             defaultValue={props.product.category}
             rules={{ required: { value: true, message: "Campo Obrigatório" } }}
             render={({ field: { value, onChange } }) => (
-                <FormInput
+                <FormSelecion
                     name={"Categoria"}
-                    //register={{ ...register("user", { required: "*Campo Obrigatório", },) }}
                     value={value}
                     onChange={onChange}
+                    values={["Bebidas Alcoolicas", "Bebidas não Alcoolicas", "Petiscos", "Pratos"]}
                     errorState={errors.category} />
             )}
         />

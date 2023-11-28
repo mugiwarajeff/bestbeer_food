@@ -9,12 +9,17 @@ import { useEffect, useState } from "react";
 import useEmployers from "./hooks/useEmployers";
 import CreateUserForm from "./components/CreateUserForm/CreateUserForm";
 import UpdateUserForm from "./components/UpdateUserForm/UpdateUserForm";
+import { useRecoilState, useRecoilValue, } from "recoil";
+import { employersSearchState } from "./states/searchEmployerState";
+import { filteredEmploersState } from "./states/filteredEmployers";
 export default function Employers() {
     const employersService: IEmpoyersService = new AxiosEmployerService();
     const [employers, setEmployers] = useEmployers();
     const [createFormOpen, setCreateFormOpen] = useState<boolean>(false);
     const [updateFormOpen, setUpdateFormOpen] = useState<boolean>(false);
     const [selectedEmployer, setSelectedEmployer] = useState<IEmployer>();
+    const [search, setSearch] = useRecoilState(employersSearchState);
+    const filteredEmployers = useRecoilValue(filteredEmploersState);
 
     useEffect(() => {
         employersService.getAllEmployers()
@@ -36,9 +41,9 @@ export default function Employers() {
     };
 
     return <section className={styles.employers}>
-        <SearchBar placeHolder={placeHolder} />
+        <SearchBar placeHolder={placeHolder} value={search} setValue={setSearch} />
         <UserTable
-            values={employers}
+            values={filteredEmployers}
             employerServiceInstance={employersService}
             onEditItem={onClickToEditItem}
         />

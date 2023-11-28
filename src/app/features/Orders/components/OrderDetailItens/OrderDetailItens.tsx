@@ -6,16 +6,18 @@ import { AiOutlineClose, AiOutlineEdit } from "react-icons/ai";
 import useProductsValue from "app/features/Products/hooks/UseProductValue";
 import { useEffect } from "react";
 import { IOrderService } from "../../interfaces/IOrderService";
+import OrderDetailItemRow from "./OrderDetailItemRow";
+import { StockService } from "app/features/Stocks/interfaces/StockService";
 
 interface OrderDetailItens {
     order: IOrder
     onDelete: (id: number) => void
+    ordersService: IOrderService,
+    stockService: StockService
 }
 
-export default function OrderDetailItens({ order, onDelete }: OrderDetailItens) {
-    console.log(order);
+export default function OrderDetailItens({ order, onDelete, ordersService, stockService }: OrderDetailItens) {
     const itens: IOrderItem[] = order.itens ?? [];
-    console.log(order);
     const products = useProductsValue();
     const typeProperties = itens.length > 0 ? Object.keys(itens[0]) : [];
     typeProperties.shift();
@@ -41,23 +43,13 @@ export default function OrderDetailItens({ order, onDelete }: OrderDetailItens) 
             </thead>
             <tbody>
                 {itens.length > 0 ? itens.map((item) => {
-                    console.log(item.quantity);
-                    return <tr key={item.id}>
-                        <td>
-                            {products.find((product) => product.id === item.productId)?.name}
-                        </td>
-                        <td>
-                            {item.quantity}
-                        </td>
-                        <td>
-                            <div className={styles.iconsContainer}>
-                                <AiOutlineEdit
-                                    size={40}
-                                />
-                                <AiOutlineClose size={40} color="red" onClick={() => onDelete(item.id)} />
-                            </div>
-                        </td>
-                    </tr>;
+
+                    return <OrderDetailItemRow
+                        orderFinalized={order.status === "Finalizado"}
+                        key={item.id}
+                        orderItem={item}
+                        orderService={ordersService}
+                        stockService={stockService} />;
                 }) : <div></div>
                 }
             </tbody>

@@ -16,7 +16,8 @@ interface DeskCardProps {
 export default function DeskCard(props: DeskCardProps) {
 
     const [orders, setOrders] = useOrders();
-    const order: IOrder | undefined = orders.find(order => order.deskId === props.desk.id);
+    const ordersToFind = [...orders].reverse();
+    const order: IOrder | undefined = ordersToFind.find((order: IOrder) => order.deskId === props.desk.id);
 
     return <div className={styles.deskCard}>
         <div className={styles.deskCard__actions}>

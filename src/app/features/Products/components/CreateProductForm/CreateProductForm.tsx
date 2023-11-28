@@ -4,6 +4,7 @@ import { IProductService } from "../../interfaces/IProductService";
 import Form from "app/shared/components/Form/Form";
 import FormInput from "app/shared/components/Form/FormInput/FormInput";
 import { useEffect } from "react";
+import FormSelecion from "app/shared/components/Form/FormSelection/FormSelecion";
 
 interface CreateProductForm {
     isOpen: boolean,
@@ -73,11 +74,11 @@ export default function CreateProductForm(props: CreateProductForm) {
             defaultValue={""}
             rules={{ required: { value: true, message: "Campo Obrigatório" } }}
             render={({ field: { value, onChange } }) => (
-                <FormInput
+                <FormSelecion
                     name={"Categoria"}
-                    //register={{ ...register("user", { required: "*Campo Obrigatório", },) }}
                     value={value}
                     onChange={onChange}
+                    values={["Bebidas Alcoolicas", "Bebidas não Alcoolicas", "Petiscos", "Pratos"]}
                     errorState={errors.category} />
             )}
         />

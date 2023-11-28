@@ -1,0 +1,13 @@
+.iconsContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+
+    * {
+        &:hover {
+            cursor: pointer;
+            opacity: 0.7;
+        }
+    }
+
+}

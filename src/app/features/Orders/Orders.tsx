@@ -12,6 +12,8 @@ import { IDeskService } from "../Desks/interfaces/IDeskService";
 import { AxiosDeskService } from "../Desks/services/axiosDeskService";
 import useSetDesksState from "../Desks/hooks/useSetDeskState";
 import { IDesk } from "../Desks/interfaces/IDesk";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { ordersSearchState } from "./state/ordersSearch.State";
 
 export default function Orders() {
     const ordersService: IOrderService = new AxiosOrderService();
@@ -21,6 +23,8 @@ export default function Orders() {
     const setDesks = useSetDesksState();
     const [openCreateForm, setOpenCreateForm] = useState<boolean>(false);
     const placeHolder = "Pesquise seus Pedidos";
+    const [search, setSearch] = useRecoilState(ordersSearchState);
+
 
     useEffect(() => {
         ordersService.getOrders().then((orders: IOrder[]) => {
@@ -34,7 +38,7 @@ export default function Orders() {
 
 
     return <section className={styles.orders}>
-        <SearchBar placeHolder={placeHolder} />
+        <SearchBar placeHolder={placeHolder} value={search} setValue={setSearch} />
         <OrdersTable ordersServiceInstance={ordersService} desksServiceInstance={deskService} />
         <Fab onClick={() => {
             setOpenCreateForm(true);

@@ -10,6 +10,12 @@ export class AxiosOrderService implements IOrderService {
     constructor() {
         this.axiosInstance = AxiosService.getInstance();
     }
+    public async updateOrderItem(orderItemId: number, quantity: number): Promise<IOrderItem> {
+        const response: AxiosResponse = await this.axiosInstance.put("/orderItem/" + orderItemId, { quantity: quantity });
+        const updatedOrderItem: IOrderItem = response.data;
+
+        return updatedOrderItem;
+    }
 
     public async deleteOrderItem(id: number): Promise<IOrderItem> {
         const response: AxiosResponse = await this.axiosInstance.delete("/orderItem/" + id);

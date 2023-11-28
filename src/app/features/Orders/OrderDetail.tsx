@@ -74,7 +74,7 @@ export default function OrderDetail() {
 
         <OrderDetailFields order={order} />
         {order !== undefined}
-        <OrderDetailItens order={order} onDelete={deleteOrderItem} />
+        <OrderDetailItens order={order} onDelete={deleteOrderItem} ordersService={ordersService} stockService={stockService} />
         <Fab onClick={() => {
             setFormOpen(true);
         }} />

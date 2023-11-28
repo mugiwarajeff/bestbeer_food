@@ -2,6 +2,7 @@ import useEmployers from "app/features/Employers/hooks/useEmployers";
 import { IEmpoyersService } from "app/features/Employers/interfaces/IEmployersService";
 import Form from "app/shared/components/Form/Form";
 import InputForm from "app/shared/components/Form/FormInput/FormInput";
+import FormSelecion from "app/shared/components/Form/FormSelection/FormSelecion";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 interface CreateUserForm {
@@ -58,7 +59,7 @@ export default function CreateUserForm(props: CreateUserForm) {
 
     return <Form
         isOpen={props.isOpen}
-        title={"Criar Usuario"}
+        title={"Criar Funcionário"}
         onSubmit={handleSubmit(createHandler)}
         onCancel={props.onClose}>
         <InputForm
@@ -108,17 +109,13 @@ export default function CreateUserForm(props: CreateUserForm) {
             }}
             errorState={errors.email}
         />
-        <InputForm
-            name={"Role"}
-            value={role}
-            onChange={event => setRole(event.target.value)}
-            register={{
-                ...register("role", {
-                    required: "*Campo Obrigatório"
-                })
-            }}
-            errorState={errors.role}
-        />
+        <FormSelecion name={"Função"} value={role} onChange={event => setRole(event.target.value)} values={[
+            "admin",
+            "Garçon",
+            "Caixa",
+            "Gerente"
+        ]} errorState={errors.role} />
+
         <InputForm
             name={"Password"}
             value={password}
@@ -133,3 +130,7 @@ export default function CreateUserForm(props: CreateUserForm) {
         />
     </Form>;
 }
+
+/**
+ *  
+ */

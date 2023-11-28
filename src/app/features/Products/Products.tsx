@@ -9,13 +9,20 @@ import useProducts from "./hooks/UseProducts";
 import { useEffect, useState } from "react";
 import CreateProductForm from "./components/CreateProductForm/CreateProductForm";
 import UpdateProductForm from "./components/UpdateProductForm/UpdateProductForm";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { productSearch } from "./states/ProductSearchState";
+import { useFilteredProducts } from "./states/FilteredProducts";
+
 
 export default function Products() {
     const productService: IProductService = new AxiosProductService();
     const [products, setProducts] = useProducts();
+    const filteredProducts = useRecoilValue(useFilteredProducts);
     const [createFormOpen, setCreateFormOpen] = useState<boolean>(false);
     const [updateFormOpen, setUpdateFormOpen] = useState<boolean>(false);
     const [selectedProduct, setSelectedProduct] = useState<IProduct>();
+
+    const [search, setSearch] = useRecoilState(productSearch);
 
 
     useEffect(() => {
@@ -38,8 +45,8 @@ export default function Products() {
 
 
     return <section className={styles.products}>
-        <SearchBar placeHolder={placeHolder} />
-        <ProductTable values={products} onEditItem={onClickToEditItem} productServiceInstance={productService} />
+        <SearchBar placeHolder={placeHolder} value={search} setValue={setSearch} />
+        <ProductTable values={filteredProducts} onEditItem={onClickToEditItem} productServiceInstance={productService} />
         <Fab onClick={() => {
             setCreateFormOpen(true);
 
