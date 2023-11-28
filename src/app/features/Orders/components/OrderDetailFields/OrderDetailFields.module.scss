@@ -1,0 +1,16 @@
+.orderDetailFields {
+    display: flex;
+    height: 10%;
+    justify-content: space-around;
+    justify-content: center;
+    align-items: center;
+
+    input {
+        margin: 10px;
+        width: 50%;
+    }
+
+    label {
+        color: black;
+    }
+}

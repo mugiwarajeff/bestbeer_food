@@ -1,26 +1,26 @@
-import { useAvailableDesks } from "app/features/Desks/hooks/useAvailableDesks";
-import { useOrders } from "../../hooks/useOrders";
+
 import { IOrderService } from "../../interfaces/IOrderService";
-import { IDesk } from "app/features/Desks/interfaces/IDesk";
+
 import { Controller, useForm } from "react-hook-form";
 import { useEffect } from "react";
 import FormInput from "app/shared/components/Form/FormInput/FormInput";
 import FormSelecion from "app/shared/components/Form/FormSelection/FormSelecion";
 import Form from "app/shared/components/Form/Form";
 import { IProduct } from "app/features/Products/interfaces/IProduct";
-import useProducts from "app/features/Products/hooks/UseProducts";
+
 import useProductsValue from "app/features/Products/hooks/UseProductValue";
 import { IStock } from "app/features/Stocks/interfaces/IStock";
-import UseStocksValue from "app/features/Stocks/hooks/UseStocksValue";
+
 import { IOrder } from "../../interfaces/IOrder";
 import { IOrderItem } from "../../interfaces/IOrderItem";
 import { StockService } from "app/features/Stocks/interfaces/StockService";
 import { useStocks } from "app/features/Stocks/hooks/UseStocks";
+import { useOrders } from "../../hooks/useOrders";
 
 interface CreateOrderItemForm {
     isOpen: boolean,
     order?: IOrder,
-    setOrder: React.Dispatch<React.SetStateAction<IOrder | undefined>>,
+    setOrder: React.Dispatch<React.SetStateAction<IOrder>>,
     onClose: () => void,
     ordersServiceInstance: IOrderService;
     stockServiceInstance: StockService
@@ -37,6 +37,7 @@ export default function CreateOrderItemForm(props: CreateOrderItemForm) {
     const stockService: StockService = props.stockServiceInstance;
     const product: IProduct[] = useProductsValue();
     const [stocks, setStock] = useStocks();
+    const [order, setOrders] = useOrders();
     const { handleSubmit, formState: { errors, }, control, reset } = useForm({ mode: "onChange" });
 
     useEffect(() => { reset(); }, [props.isOpen]);
@@ -53,18 +54,42 @@ export default function CreateOrderItemForm(props: CreateOrderItemForm) {
 
             const orderItem: IOrderItem = await ordersService.createOrderItem(
                 +props.order!.id, +data.quantity!, +productId);
-            if(props.order?.items === undefined){
-                props.order!.items = [];
-            }
-            
-            props.order!.items.push(orderItem);
-            props.setOrder(props.order);
 
-             await stockService.updateStock({
+            if (props.order?.itens === undefined) {
+                props.order!.itens = [];
+            }
+
+            props.order?.itens.push(orderItem);
+            props.order!.status = "Em andamento";
+            props.setOrder(props.order!);
+
+            const updatedOrder: IOrder = await ordersService.updateOrder(props.order!);
+
+            if (updatedOrder !== undefined) {
+                setOrders(order.map(order => {
+                    if (order.id === updatedOrder.id) {
+                        order = updatedOrder;
+                    }
+
+                    return order;
+                }));
+            }
+
+
+
+            const updatedStock: IStock = await stockService.updateStock({
                 id: stock.id,
                 quantity: stock.quantity - +data.quantity!,
                 productId: stock.productId
             });
+
+            setStock(stocks.map(stock => {
+                if (stock.id === updatedStock.id) {
+                    stock = updatedStock;
+                }
+
+                return stock;
+            }));
         }
         props.onClose();
     };

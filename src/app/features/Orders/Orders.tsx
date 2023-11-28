@@ -12,15 +12,11 @@ import { IDeskService } from "../Desks/interfaces/IDeskService";
 import { AxiosDeskService } from "../Desks/services/axiosDeskService";
 import useSetDesksState from "../Desks/hooks/useSetDeskState";
 import { IDesk } from "../Desks/interfaces/IDesk";
-import { StockService } from "../Stocks/interfaces/StockService";
-import { AxiosStockService } from "../Stocks/services/AxiosStockService";
-import { useSetStocks } from "../Stocks/hooks/UseSetStocks";
-import { IStock } from "../Stocks/interfaces/IStock";
 
-export default function Orders(){
+export default function Orders() {
     const ordersService: IOrderService = new AxiosOrderService();
     const deskService: IDeskService = new AxiosDeskService();
-   
+
     const setOrders = useSetOrders();
     const setDesks = useSetDesksState();
     const [openCreateForm, setOpenCreateForm] = useState<boolean>(false);
@@ -28,24 +24,24 @@ export default function Orders(){
 
     useEffect(() => {
         ordersService.getOrders().then((orders: IOrder[]) => {
-        
             setOrders(orders);
-        } );
+        });
 
         deskService.getAllDesks().then((desks: IDesk[]) => setDesks(desks));
 
-       
+
     }, []);
 
 
     return <section className={styles.orders}>
-        <SearchBar placeHolder={placeHolder}/>
-        <OrdersTable ordersServiceInstance={ordersService} />
+        <SearchBar placeHolder={placeHolder} />
+        <OrdersTable ordersServiceInstance={ordersService} desksServiceInstance={deskService} />
         <Fab onClick={() => {
             setOpenCreateForm(true);
         }} />
-        <CreateOrderForm 
-            isOpen={openCreateForm} 
+        <CreateOrderForm
+            desksServiceInstance={deskService}
+            isOpen={openCreateForm}
             ordersServiceInstance={ordersService}
             onClose={() => {
                 setOpenCreateForm(false);

@@ -12,10 +12,16 @@ import Fab from "app/shared/components/Fab/Fab";
 
 import CreateDeskForm from "./components/CreateDeskForm/CreateDeskForm";
 import UpdateDeskForm from "./components/UpdateDeskForm/UpdateDeskForm";
+import { IOrderService } from "../Orders/interfaces/IOrderService";
+import { AxiosOrderService } from "../Orders/services/AxiosOrderService";
+
+import { useSetOrders } from "../Orders/hooks/useOrdersSetter";
 
 export default function Desks() {
     const axiosDeskService: IDeskService = new AxiosDeskService();
+    const orderService: IOrderService = new AxiosOrderService();
 
+    const setOrders = useSetOrders();
     const [desks, setDesks] = useDeksState();
     const [editingDesk, setEditingDesk] = useState<IDesk>({ available: true, description: "", id: 0 });
     const [createFormIsOpen, setCreateFormIsOpen] = useState<boolean>(false);
@@ -25,6 +31,8 @@ export default function Desks() {
         axiosDeskService.getAllDesks().then((desks: IDesk[]) => {
             setDesks(desks);
         });
+
+        orderService.getOrders().then(orders => setOrders(orders));
     }, []);
 
     const isOpen = getSidebarState();

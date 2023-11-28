@@ -5,49 +5,60 @@ import { Controller, useForm } from "react-hook-form";
 import { useEffect } from "react";
 import FormInput from "app/shared/components/Form/FormInput/FormInput";
 import FormSelecion from "app/shared/components/Form/FormSelection/FormSelecion";
-import { IProductService } from "app/features/Products/interfaces/IProductService";
-import useProductsValue from "app/features/Products/hooks/UseProductValue";
-import { IProduct } from "app/features/Products/interfaces/IProduct";
-import useDesksStateValue from "app/features/Desks/hooks/useDeskStateValue";
 import { IDesk } from "app/features/Desks/interfaces/IDesk";
 import { useAvailableDesks } from "app/features/Desks/hooks/useAvailableDesks";
+import { IDeskService } from "app/features/Desks/interfaces/IDeskService";
+import useDeksState from "app/features/Desks/hooks/useDeskState";
 
 interface CreateProductForm {
     isOpen: boolean,
     onClose: () => void,
-    ordersServiceInstance: IOrderService;
+    ordersServiceInstance: IOrderService,
+    desksServiceInstance: IDeskService
 }
 
 interface FormProps {
     status?: string,
-    deskId?: number,
+    deskId?: string,
     description?: string
 }
 
 
 
-export default function CreateOrderForm(props: CreateProductForm){
-
+export default function CreateOrderForm(props: CreateProductForm) {
     const ordersService: IOrderService = props.ordersServiceInstance;
-
+    const desksService: IDeskService = props.desksServiceInstance;
     const [orders, setOrders] = useOrders();
-    const desks: IDesk[] = useAvailableDesks();
+    const desksAvailables: IDesk[] = useAvailableDesks();
+    const [desks, setDesks] = useDeksState();
     const { handleSubmit, formState: { errors, }, control, reset } = useForm({ mode: "onChange" });
 
     useEffect(() => { reset(); }, [props.isOpen]);
 
 
     const onSubmit = async (data: FormProps) => {
-        console.log(data);
+
+        const selectedDesk: IDesk | undefined = desks.find(desk => desk.id === Number.parseInt(data.deskId ?? ""));
         const newOrder = await ordersService.createOrder(
             {
-                deskId: data.deskId ?? 0,
+                deskId: Number.parseInt(data.deskId ?? ""),
                 status: "Inicial",
                 description: data.description ?? "",
             });
 
-        if (newOrder !== undefined) {
+        if (newOrder !== undefined && selectedDesk !== undefined) {
             setOrders([...orders, newOrder]);
+            console.log(selectedDesk.description ?? "");
+            const updatedDesk: IDesk | undefined = await desksService.updateDesk({ available: false, description: selectedDesk.description, id: selectedDesk.id });
+            if (updatedDesk !== undefined) {
+                setDesks(desks.map(desk => {
+                    if (desk.id === updatedDesk.id) {
+                        desk = updatedDesk;
+                    }
+
+                    return desk;
+                }));
+            }
         }
 
         props.onClose();
@@ -61,15 +72,15 @@ export default function CreateOrderForm(props: CreateProductForm){
         <Controller
             control={control}
             name="deskId"
-            defaultValue={""}
+            defaultValue={desksAvailables[0]?.id ?? 0}
             rules={{ required: { value: true, message: "Campo Obrigatório" }, }}
             render={({ field: { value, onChange } }) => (
-                <FormSelecion 
+                <FormSelecion
                     name="Número da mesa"
                     onChange={onChange}
                     value={value}
                     errorState={errors.deskId}
-                    values={desks.map((desk: IDesk) => desk.id)}
+                    values={desksAvailables.map((desk: IDesk) => desk.id)}
                 />
             )}
         />
@@ -83,7 +94,7 @@ export default function CreateOrderForm(props: CreateProductForm){
                     //register={{ ...register("user", { required: "*Campo Obrigatório", },) }}
                     value={value}
                     onChange={onChange}
-                    errorState={errors.category} />
+                    errorState={errors.description} />
             )}
         />
     </Form>;

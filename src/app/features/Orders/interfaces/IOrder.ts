@@ -1,9 +1,9 @@
-import { IOrderItem } from "./IOrderItem"
+import { IOrderItem } from "./IOrderItem";
 
 export interface IOrder {
-    id: number, 
+    id: number,
     status: string,
     description: string
     deskId: number,
-    items: IOrderItem[]
+    itens: IOrderItem[]
 }
