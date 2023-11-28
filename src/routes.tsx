@@ -8,13 +8,17 @@ export default function RouteContainer() {
 
     function mappingDataInRoutes(pagesData: routerType[] | undefined) {
 
-        return pagesData?.map((pagedata: routerType) => <Route
+        
+        return pagesData?.map((pagedata: routerType) => {
+            console.log(pagedata.path);
+            return <Route
             key={pagedata.title}
             path={pagedata.path}
             element={pagedata.element}
-        >
+        >   
             {mappingDataInRoutes(pagedata.childrens)}
-        </Route>);
+        </Route>;   
+        } );
     }
 
     const pageRoutes = mappingDataInRoutes(pagesData);

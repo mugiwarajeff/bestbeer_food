@@ -7,6 +7,7 @@ import Employers from "./Employers/Employers";
 import Home from "./Home/home";
 import routerType from "app/shared/interfaces/routerTypes";
 import ProtectedRoute from "app/shared/utils/protectedRoute";
+import OrderDetail from "./Orders/OrderDetail";
 
 
 const pagesData: routerType[] = [
@@ -28,7 +29,12 @@ const pagesData: routerType[] = [
             {
                 title: "Orders", 
                 element: <Orders/>, 
-                path: "orders"
+                path: "orders",
+            },
+            {
+                element: <OrderDetail />,
+                path: "orders/details/:id",
+                title: "Order Details"
             },
             {
                 title: "Products", 
